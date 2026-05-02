@@ -2,7 +2,7 @@ let books = [];
 let activeLoans = [];
 
 const state = {
-  user: JSON.parse(localStorage.getItem("zalUserAz") || "null"),
+  user: JSON.parse(localStorage.getItem("zahsUser") || "null"),
 };
 
 const views = document.querySelectorAll(".view");
@@ -10,11 +10,13 @@ const navLinks = document.querySelectorAll(".nav-link");
 
 const loginButton = document.getElementById("loginButton");
 const logoutButton = document.getElementById("logoutButton");
+const accountLabel = document.getElementById("accountLabel");
+
 const loginModal = document.getElementById("loginModal");
 const closeLogin = document.getElementById("closeLogin");
 const saveLogin = document.getElementById("saveLogin");
 const studentCode = document.getElementById("studentCode");
-const studentName = document.getElementById("studentName");
+const studentPassword = document.getElementById("studentPassword");
 
 const infoModal = document.getElementById("infoModal");
 const closeInfo = document.getElementById("closeInfo");
@@ -26,12 +28,21 @@ const languageSelect = document.getElementById("languageSelect");
 const genreSelect = document.getElementById("genreSelect");
 const accessSelect = document.getElementById("accessSelect");
 
+const headerSearch = document.getElementById("headerSearch");
+const headerSearchButton = document.getElementById("headerSearchButton");
+
+const mobileMenuButton = document.getElementById("mobileMenuButton");
+const mainNav = document.getElementById("mainNav");
+const loginHeroBtn = document.getElementById("loginHeroBtn");
+
+let revealObserver = null;
+
 function saveUser() {
-  localStorage.setItem("zalUserAz", JSON.stringify(state.user));
+  localStorage.setItem("zahsUser", JSON.stringify(state.user));
 }
 
 function removeUser() {
-  localStorage.removeItem("zalUserAz");
+  localStorage.removeItem("zahsUser");
 }
 
 async function apiRequest(url, options = {}) {
@@ -85,24 +96,6 @@ async function loadLoans() {
   renderRecommendations();
 }
 
-function normalizeLoan(loan) {
-  return {
-    loanId: loan.loan_id,
-    bookId: loan.id,
-    title: loan.title,
-    author: loan.author,
-    year: loan.year,
-    language: loan.language,
-    genre: loan.genre,
-    pages: loan.pages,
-    access: loan.access_status,
-    pdfUrl: loan.pdf_path,
-    note: loan.note,
-    borrowedAt: loan.borrowed_at,
-    dueAt: loan.due_at,
-  };
-}
-
 function getLoanByBookId(bookId) {
   return activeLoans.find((loan) => Number(loan.id) === Number(bookId));
 }
@@ -139,35 +132,70 @@ function showView(viewId) {
     link.classList.toggle("active", link.dataset.view === viewId);
   });
 
+  if (mainNav) {
+    mainNav.classList.remove("open");
+  }
+
   renderCatalog();
   renderShelf();
   renderRecommendations();
   updateStats();
+  observeRevealElements();
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
 }
 
 function updateLoginButton() {
+  if (!loginButton || !logoutButton || !accountLabel) return;
+
   if (state.user) {
-    loginButton.textContent = `${state.user.studentCode} · ${state.user.name || "Şagird"}`;
+    const name = state.user.name || "Şagird";
+    const surname = state.user.surname || "";
+    const className = state.user.className || "";
+
+    accountLabel.textContent = `${name} ${surname} · ${className}`;
+    accountLabel.classList.remove("hidden");
+
     loginButton.classList.add("hidden");
     logoutButton.classList.remove("hidden");
+
+    if (loginHeroBtn) {
+      loginHeroBtn.textContent = "Kataloqa keç";
+    }
   } else {
+    accountLabel.textContent = "";
+    accountLabel.classList.add("hidden");
+
     loginButton.textContent = "Daxil ol";
     loginButton.classList.remove("hidden");
     logoutButton.classList.add("hidden");
+
+    if (loginHeroBtn) {
+      loginHeroBtn.textContent = "Şagird girişi";
+    }
   }
 }
 
 function updateStats() {
-  document.getElementById("totalBooks").textContent = books.length;
-  document.getElementById("safeBooks").textContent = books.filter(
-    (book) => book.access === "safe",
-  ).length;
-  document.getElementById("borrowedBooks").textContent = activeLoans.length;
+  const totalBooks = document.getElementById("totalBooks");
+  const safeBooks = document.getElementById("safeBooks");
+  const borrowedBooks = document.getElementById("borrowedBooks");
+
+  if (totalBooks) totalBooks.textContent = books.length;
+  if (safeBooks)
+    safeBooks.textContent = books.filter(
+      (book) => book.access === "safe",
+    ).length;
+  if (borrowedBooks) borrowedBooks.textContent = activeLoans.length;
 }
 
 function fillGenres() {
-  const currentValue = genreSelect.value;
+  if (!genreSelect) return;
 
+  const currentValue = genreSelect.value;
   genreSelect.innerHTML = `<option value="all">Hamısı</option>`;
 
   const genres = [...new Set(books.map((book) => book.genre))].sort();
@@ -183,7 +211,7 @@ function fillGenres() {
 }
 
 function filteredBooks() {
-  const query = searchInput.value.trim().toLowerCase();
+  const query = searchInput ? searchInput.value.trim().toLowerCase() : "";
 
   let result = books.filter((book) => {
     const text = [
@@ -198,16 +226,23 @@ function filteredBooks() {
 
     const matchesQuery = text.includes(query);
     const matchesLanguage =
-      languageSelect.value === "all" || book.language === languageSelect.value;
+      !languageSelect ||
+      languageSelect.value === "all" ||
+      book.language === languageSelect.value;
     const matchesGenre =
-      genreSelect.value === "all" || book.genre === genreSelect.value;
+      !genreSelect ||
+      genreSelect.value === "all" ||
+      book.genre === genreSelect.value;
     const matchesAccess =
-      accessSelect.value === "all" || book.access === accessSelect.value;
+      !accessSelect ||
+      accessSelect.value === "all" ||
+      book.access === accessSelect.value;
 
     return matchesQuery && matchesLanguage && matchesGenre && matchesAccess;
   });
 
   result.sort((a, b) => {
+    if (!sortSelect) return 0;
     if (sortSelect.value === "az") return a.title.localeCompare(b.title);
     if (sortSelect.value === "za") return b.title.localeCompare(a.title);
     if (sortSelect.value === "author") return a.author.localeCompare(b.author);
@@ -222,9 +257,10 @@ function bookCard(book) {
   const active = isLoanActive(book.id);
   const remaining = daysLeft(book.id);
   const loanDays = getLoanDays(book);
+  const hasAnyActiveLoan = activeLoans.length > 0;
 
   const card = document.createElement("article");
-  card.className = "book-card";
+  card.className = "book-card reveal";
 
   card.innerHTML = `
     <div class="cover">
@@ -254,8 +290,11 @@ function bookCard(book) {
         active
           ? `<button class="preview" data-open="${book.id}">Aç</button>
              <button class="return" data-return="${book.id}">Qaytar</button>`
-          : `<button class="borrow" data-borrow="${book.id}">${loanDays} gün götür</button>
-             <button class="preview" data-info="${book.id}">Məlumat</button>`
+          : hasAnyActiveLoan
+            ? `<button class="disabled-btn" disabled>Əvvəlki kitabı qaytar</button>
+               <button class="preview" data-info="${book.id}">Məlumat</button>`
+            : `<button class="borrow" data-borrow="${book.id}">${loanDays} gün götür</button>
+               <button class="preview" data-info="${book.id}">Məlumat</button>`
       }
     </div>
   `;
@@ -279,6 +318,8 @@ function renderCatalog() {
   list.forEach((book) => {
     grid.appendChild(bookCard(book));
   });
+
+  observeRevealElements();
 }
 
 function renderShelf() {
@@ -303,6 +344,8 @@ function renderShelf() {
       grid.appendChild(bookCard(book));
     }
   });
+
+  observeRevealElements();
 }
 
 function renderRecommendations() {
@@ -332,13 +375,21 @@ function renderRecommendations() {
   recs.forEach((book) => {
     container.appendChild(bookCard(book));
   });
+
+  observeRevealElements();
 }
 
 async function loginUser() {
   const code = studentCode.value.trim();
+  const password = studentPassword.value.trim();
 
   if (!/^\d{4}$/.test(code)) {
     alert("4 rəqəmli şagird kodu daxil et.");
+    return;
+  }
+
+  if (!password) {
+    alert("Şifrə daxil et.");
     return;
   }
 
@@ -347,6 +398,7 @@ async function loginUser() {
       method: "POST",
       body: JSON.stringify({
         studentCode: code,
+        password: password,
       }),
     });
 
@@ -355,6 +407,9 @@ async function loginUser() {
 
     updateLoginButton();
     loginModal.classList.add("hidden");
+
+    studentCode.value = "";
+    studentPassword.value = "";
 
     await loadLoans();
   } catch (error) {
@@ -385,6 +440,11 @@ function logoutUser() {
 async function borrowBook(bookId) {
   if (!state.user) {
     openLogin();
+    return;
+  }
+
+  if (activeLoans.length > 0) {
+    alert("Yeni kitab götürmək üçün əvvəlcə aktiv kitabı qaytar.");
     return;
   }
 
@@ -443,7 +503,6 @@ function showBookInfo(bookId) {
 
     <div class="reader-body">
       <p>${book.note || ""}</p>
-      <p>PDF yolu: <strong>${book.pdfUrl}</strong></p>
       <p>Tam oxumaq üçün əvvəlcə əsəri götür.</p>
     </div>
   `;
@@ -507,18 +566,18 @@ function openReader(bookId) {
         }
 
         .topbar {
-          height: 58px;
-          background: #0f2747;
+          min-height: 58px;
+          background: #5b5d91;
           color: white;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 0 22px;
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+          gap: 18px;
+          padding: 14px 22px;
         }
 
         .topbar span {
-          color: #d8c28a;
+          color: #e8ddbd;
           font-size: 14px;
         }
 
@@ -533,12 +592,23 @@ function openReader(bookId) {
           position: fixed;
           right: 18px;
           bottom: 18px;
-          color: rgba(15, 39, 71, 0.55);
+          color: rgba(91, 93, 145, 0.65);
           background: rgba(255, 255, 255, 0.85);
-          border: 1px solid rgba(15, 39, 71, 0.12);
+          border: 1px solid rgba(91, 93, 145, 0.18);
           padding: 8px 12px;
           border-radius: 999px;
           font-size: 13px;
+        }
+
+        @media (max-width: 700px) {
+          .topbar {
+            align-items: flex-start;
+            flex-direction: column;
+          }
+
+          iframe {
+            height: calc(100vh - 88px);
+          }
         }
       </style>
     </head>
@@ -552,13 +622,57 @@ function openReader(bookId) {
       <iframe src="${readUrl}"></iframe>
 
       <div class="watermark">
-        ZAL Library · Student ${escapeHtml(state.user.studentCode)}
+        ZAHS Library · Student ${escapeHtml(state.user.studentCode)}
       </div>
     </body>
     </html>
   `);
 
   readerWindow.document.close();
+}
+
+function initRevealAnimations() {
+  revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible-reveal");
+        }
+      });
+    },
+    { threshold: 0.12 },
+  );
+
+  observeRevealElements();
+}
+
+function observeRevealElements() {
+  if (!revealObserver) return;
+
+  const items = document.querySelectorAll(
+    ".reveal:not([data-observed='true'])",
+  );
+
+  items.forEach((item) => {
+    item.dataset.observed = "true";
+    revealObserver.observe(item);
+  });
+}
+
+function runHeaderSearch() {
+  const value = headerSearch.value.trim();
+
+  if (!value) {
+    showView("catalog");
+    return;
+  }
+
+  showView("catalog");
+
+  if (searchInput) {
+    searchInput.value = value;
+    renderCatalog();
+  }
 }
 
 document.body.addEventListener("click", (event) => {
@@ -591,12 +705,41 @@ navLinks.forEach((link) => {
 
 [searchInput, sortSelect, languageSelect, genreSelect, accessSelect].forEach(
   (input) => {
+    if (!input) return;
     input.addEventListener("input", renderCatalog);
   },
 );
 
 loginButton.addEventListener("click", openLogin);
 logoutButton.addEventListener("click", logoutUser);
+
+if (loginHeroBtn) {
+  loginHeroBtn.addEventListener("click", () => {
+    if (state.user) {
+      showView("catalog");
+    } else {
+      openLogin();
+    }
+  });
+}
+
+if (mobileMenuButton && mainNav) {
+  mobileMenuButton.addEventListener("click", () => {
+    mainNav.classList.toggle("open");
+  });
+}
+
+if (headerSearchButton) {
+  headerSearchButton.addEventListener("click", runHeaderSearch);
+}
+
+if (headerSearch) {
+  headerSearch.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      runHeaderSearch();
+    }
+  });
+}
 
 closeLogin.addEventListener("click", () => {
   loginModal.classList.add("hidden");
@@ -610,6 +753,7 @@ saveLogin.addEventListener("click", loginUser);
 
 async function init() {
   updateLoginButton();
+  initRevealAnimations();
 
   try {
     await loadBooks();
@@ -626,29 +770,3 @@ async function init() {
 }
 
 init();
-
-function initRevealAnimations() {
-  const revealItems = document.querySelectorAll(".reveal");
-
-  revealItems.forEach((item) => {
-    const delay = item.dataset.delay || 0;
-    item.style.setProperty("--delay", `${delay}ms`);
-  });
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible-reveal");
-        }
-      });
-    },
-    {
-      threshold: 0.14,
-    },
-  );
-
-  revealItems.forEach((item) => observer.observe(item));
-}
-
-window.addEventListener("load", initRevealAnimations);

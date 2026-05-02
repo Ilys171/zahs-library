@@ -7,246 +7,226 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="ornament ornament-one"></div>
-    <div class="ornament ornament-two"></div>
-    <div class="floating-books">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+    <header class="zahs-header">
+      <div class="zahs-top">
+        <div class="zahs-top-inner">
+          <div class="zahs-brand">
+            <div class="zahs-logo-card">
+              <img
+                src="images/logo-white.png"
+                alt="ZAHS logo"
+                onerror="this.style.display = 'none'"
+              />
+              <span><img src="images/logo-white.png" alt="logo" /></span>
+            </div>
 
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-mark">ZAHS</div>
-        <div>
-          <h1>ZAHS Rəqəmsal Kitabxana</h1>
-          <p>
-            Akademik Zərifə Əliyeva adına Lisey üçün rəqəmsal kitabxana sistemi
-          </p>
+            <div class="zahs-brand-text">
+              <h1>Akademik Zərifə Əliyeva</h1>
+              <p>adına liseyin rəqəmsal kitabxanası</p>
+            </div>
+          </div>
+
+          <div class="zahs-right">
+            <div class="zahs-search">
+              <input id="headerSearch" type="text" placeholder="Search..." />
+              <button id="headerSearchButton" aria-label="Search">⌕</button>
+            </div>
+
+            <div class="zahs-avatar">
+              <img
+                src="images/avatar.png"
+                alt="ZAHS"
+                onerror="this.style.display = 'none'"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
-      <nav class="nav">
-        <button class="nav-link active" data-view="home">Ana səhifə</button>
-        <button class="nav-link" data-view="catalog">Kataloq</button>
-        <button class="nav-link" data-view="shelf">Mənim rəfim</button>
-        <button class="nav-link" data-view="rules">Qaydalar</button>
-      </nav>
+      <div class="zahs-nav-wrap">
+        <div class="zahs-nav-inner">
+          <button
+            class="mobile-menu-button"
+            id="mobileMenuButton"
+            aria-label="Menyunu aç"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
 
-      <div class="auth-actions">
-        <button id="loginButton" class="login-button">Daxil ol</button>
-        <button id="logoutButton" class="logout-button hidden">Çıxış</button>
+          <nav class="zahs-nav" id="mainNav">
+            <button class="nav-link active" data-view="home">Ana səhifə</button>
+            <button class="nav-link" data-view="catalog">Kataloq</button>
+            <button class="nav-link" data-view="shelf">Mənim rəfim</button>
+            <button class="nav-link" data-view="rules">Qaydalar</button>
+          </nav>
+
+          <div class="auth-actions">
+            <span id="accountLabel" class="account-label hidden"></span>
+            <button id="loginButton" class="login-button">Daxil ol</button>
+            <button id="logoutButton" class="logout-button hidden">
+              Çıxış
+            </button>
+          </div>
+
+          <div class="zahs-header-line"></div>
+        </div>
       </div>
     </header>
 
-    <main>
+    <main class="site-main">
       <section id="home" class="view visible">
-        <section class="hero hero-rich reveal">
-          <div class="hero-content">
-            <div class="eyebrow">Rəqəmsallaşdırma • Təhsil • Ədəbiyyat</div>
-            <h2>ZAHS üçün yeni nəsil rəqəmsal kitabxana platforması.</h2>
-            <p class="hero-text">
-              Bu layihə məktəb kitabxanasını daha əlçatan, daha müasir və daha
-              səmərəli etmək üçün hazırlanıb. Şagirdlər 4 rəqəmli kod ilə daxil
-              olur, əsərləri müəyyən müddətə götürür, filtr sistemindən istifadə
-              edir və oxu tarixçəsinə uyğun tövsiyələr alırlar.
+        <section class="hero-section reveal">
+          <div class="hero-main">
+            <p class="eyebrow">Rəqəmsal kitabxana</p>
+            <h2>ZAHS kitabxanasına rahat və müasir giriş.</h2>
+            <p>
+              Azərbaycan və rus dillərində əsərlərin axtarışı, seçimi və
+              oxunması üçün hazırlanmış sadə və istifadəsi rahat kitabxana
+              mühiti.
             </p>
-
-            <div class="hero-tags">
-              <span>4 rəqəmli şagird kodu</span>
-              <span>PDF oxu sistemi</span>
-              <span>Ağıllı tövsiyələr</span>
-              <span>Müddətli giriş</span>
-            </div>
 
             <div class="hero-actions">
-              <button class="primary magnetic-btn" data-go="catalog">
-                Kataloqa bax
-              </button>
-              <button class="secondary magnetic-btn" data-go="rules">
-                Necə işləyir?
-              </button>
+              <button class="primary" data-go="catalog">Kataloqa bax</button>
+              <button class="secondary" id="loginHeroBtn">Şagird girişi</button>
             </div>
           </div>
 
-          <div class="hero-side reveal" data-delay="120">
-            <div class="glass-card hero-card-main">
-              <p class="small-label">Layihə məqsədi</p>
-              <h3>Kitabxananı fiziki məkandan rəqəmsal mühitə keçirmək</h3>
-              <p>
-                Bu sistem lisey daxilində minlərlə əsərin daha rahat
-                axtarılmasına, götürülməsinə və izlənməsinə imkan verir.
-              </p>
+          <aside class="hero-stats">
+            <div class="stat-box">
+              <strong id="totalBooks">0</strong>
+              <span>əsər</span>
             </div>
-
-            <div class="hero-mini-grid">
-              <div class="glass-card mini-stat">
-                <strong id="totalBooks">0</strong>
-                <span>əsər</span>
-              </div>
-              <div class="glass-card mini-stat">
-                <strong id="safeBooks">0</strong>
-                <span>təhlükəsiz başlanğıc</span>
-              </div>
-              <div class="glass-card mini-stat">
-                <strong id="borrowedBooks">0</strong>
-                <span>mənim rəfimdə</span>
-              </div>
+            <div class="stat-box">
+              <strong id="safeBooks">0</strong>
+              <span>təhlükəsiz başlanğıc</span>
             </div>
-          </div>
+            <div class="stat-box">
+              <strong id="borrowedBooks">0</strong>
+              <span>mənim rəfimdə</span>
+            </div>
+          </aside>
         </section>
 
-        <section class="project-strip reveal">
-          <div class="strip-card">
-            <span class="strip-icon">📚</span>
-            <div>
-              <h3>Rəqəmsal kataloq</h3>
-              <p>
-                Azərbaycan və rus dillərində əsərlərin rahat axtarışı və
-                filtrasiyası.
-              </p>
+        <section class="info-grid reveal">
+          <article class="info-card">
+            <span>01</span>
+            <h3>Rəqəmsal kataloq</h3>
+            <p>
+              Əsərləri dil, janr, müəllif və əlifba sırası ilə axtarmaq
+              mümkündür.
+            </p>
+          </article>
+
+          <article class="info-card">
+            <span>02</span>
+            <h3>Müddətli giriş</h3>
+            <p>Oxu müddəti əsərin həcminə görə avtomatik hesablanır.</p>
+          </article>
+
+          <article class="info-card">
+            <span>03</span>
+            <h3>Bir kitab qaydası</h3>
+            <p>Hər şagird eyni anda yalnız bir əsər götürə bilər.</p>
+          </article>
+        </section>
+
+        <section class="content-row">
+          <article class="about-card reveal">
+            <p class="eyebrow">Kitabxana haqqında</p>
+            <h2>Oxu prosesini daha sadə və nizamlı edən sistem.</h2>
+            <p>
+              Rəqəmsal kitabxana fiziki kitab fondunu axtarıla bilən, izlənilə
+              bilən və müxtəlif cihazlardan istifadə edilə bilən oxu mühitinə
+              çevirir.
+            </p>
+
+            <div class="about-points">
+              <div>
+                <strong>Tez axtarış</strong>
+                <span>Əsər, müəllif və janr üzrə nəticələr</span>
+              </div>
+              <div>
+                <strong>Oxu nəzarəti</strong>
+                <span>Aktiv giriş və qalan günlərin izlənməsi</span>
+              </div>
+              <div>
+                <strong>Uyğun tövsiyələr</strong>
+                <span>Oxu seçimlərinə əsaslanan təkliflər</span>
+              </div>
             </div>
-          </div>
-          <div class="strip-card">
-            <span class="strip-icon">🕒</span>
-            <div>
-              <h3>Müddətli oxu sistemi</h3>
-              <p>Əsərin həcminə görə 3, 7, 14 və ya 21 günlük giriş müddəti.</p>
+          </article>
+
+          <aside class="notice-board reveal">
+            <div class="board-header">
+              <p class="eyebrow">Məlumat</p>
+              <h3>Kitabxana imkanları</h3>
             </div>
-          </div>
-          <div class="strip-card">
-            <span class="strip-icon">✨</span>
-            <div>
-              <h3>Ağıllı tövsiyələr</h3>
-              <p>Şagirdin götürdüyü əsərlərə uyğun yeni oxu seçimləri.</p>
+
+            <div class="notice-item">
+              <time>01</time>
+              <div>
+                <strong>Elektron oxu rəfi</strong>
+                <p>
+                  Şagird götürdüyü əsəri “Mənim rəfim” bölməsində görə bilər.
+                </p>
+              </div>
             </div>
-          </div>
+
+            <div class="notice-item">
+              <time>02</time>
+              <div>
+                <strong>PDF oxu rejimi</strong>
+                <p>Aktiv giriş olduqda əsər ayrıca oxu pəncərəsində açılır.</p>
+              </div>
+            </div>
+
+            <div class="notice-item">
+              <time>03</time>
+              <div>
+                <strong>Filtr sistemi</strong>
+                <p>Dil, janr və əlifba sırası üzrə seçim etmək mümkündür.</p>
+              </div>
+            </div>
+          </aside>
         </section>
 
         <section class="section-head reveal">
-          <div>
-            <p class="eyebrow">Layihə haqqında</p>
-            <h2>Bu sistem nə üçün yaradılıb?</h2>
-            <p class="section-description">
-              Məktəb kitabxanasında kitabların yalnız fiziki şəkildə əlçatan
-              olması istifadədə məhdudiyyət yaradır. ZAHS Rəqəmsal Kitabxana bu
-              problemi həll edərək kitab fondunu axtarıla bilən, izlənilə bilən
-              və daha effektiv istifadə edilən bir sistemə çevirir.
-            </p>
-          </div>
-        </section>
-
-        <section class="feature-grid">
-          <article class="feature-card reveal">
-            <div class="feature-top">
-              <span class="feature-badge">01</span>
-              <h3>Şagird girişi</h3>
-            </div>
-            <p>4 rəqəmli şagird kodu ilə sistemə daxil olmaq mümkündür.</p>
-          </article>
-
-          <article class="feature-card reveal" data-delay="100">
-            <div class="feature-top">
-              <span class="feature-badge">02</span>
-              <h3>Filtr və axtarış</h3>
-            </div>
-            <p>
-              Dil, janr, əlifba sırası və status üzrə geniş filtrasiya
-              mövcuddur.
-            </p>
-          </article>
-
-          <article class="feature-card reveal" data-delay="200">
-            <div class="feature-top">
-              <span class="feature-badge">03</span>
-              <h3>PDF oxu rejimi</h3>
-            </div>
-            <p>
-              Aktiv giriş olduqda əsər ayrıca pəncərədə PDF görnüşündə açılır.
-            </p>
-          </article>
-
-          <article class="feature-card reveal">
-            <div class="feature-top">
-              <span class="feature-badge">04</span>
-              <h3>Tövsiyə sistemi</h3>
-            </div>
-            <p>
-              Oxu seçimlərinə əsasən sistem uyğun yeni əsərləri təklif edir.
-            </p>
-          </article>
-
-          <article class="feature-card reveal" data-delay="100">
-            <div class="feature-top">
-              <span class="feature-badge">05</span>
-              <h3>Oxu nəzarəti</h3>
-            </div>
-            <p>
-              Şagird götürdüyü əsərləri “Mənim rəfim” bölməsində izləyə bilir.
-            </p>
-          </article>
-
-          <article class="feature-card reveal" data-delay="200">
-            <div class="feature-top">
-              <span class="feature-badge">06</span>
-              <h3>Rəqəmsal idarəetmə</h3>
-            </div>
-            <p>
-              Gələcəkdə admin panel ilə kitabların əlavə olunması da mümkündür.
-            </p>
-          </article>
-        </section>
-
-        <section class="section-head reveal">
-          <div>
-            <p class="eyebrow">Tövsiyə sistemi</p>
-            <h2>Sənin üçün seçilmiş əsərlər</h2>
-          </div>
+          <p class="eyebrow">Tövsiyələr</p>
+          <h2>Sənin üçün seçilmiş əsərlər</h2>
         </section>
 
         <div id="recommendations" class="horizontal-row reveal"></div>
 
         <section class="section-head reveal">
-          <div>
-            <p class="eyebrow">İstifadə qaydası</p>
-            <h2>Sistem necə işləyir?</h2>
-          </div>
+          <p class="eyebrow">İstifadə qaydası</p>
+          <h2>Sistem necə işləyir?</h2>
         </section>
 
-        <section class="timeline">
-          <div class="timeline-item reveal">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <span>01</span>
-              <h3>Daxil ol</h3>
-              <p>Şagird 4 rəqəmli kodu ilə sistemə daxil olur.</p>
-            </div>
-          </div>
+        <section class="steps-grid">
+          <article class="step-card reveal">
+            <span>1</span>
+            <h3>Daxil ol</h3>
+            <p>Şagird 4 rəqəmli kod və sinif şifrəsi ilə daxil olur.</p>
+          </article>
 
-          <div class="timeline-item reveal" data-delay="100">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <span>02</span>
-              <h3>Əsər seç</h3>
-              <p>Kataloqdan axtarış və filtr vasitəsilə uyğun əsər tapılır.</p>
-            </div>
-          </div>
+          <article class="step-card reveal">
+            <span>2</span>
+            <h3>Əsər seç</h3>
+            <p>Kataloqdan uyğun əsər axtarılır və götürülür.</p>
+          </article>
 
-          <div class="timeline-item reveal" data-delay="200">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <span>03</span>
-              <h3>Götür və oxu</h3>
-              <p>Əsərin həcminə görə avtomatik müddət verilir və PDF açılır.</p>
-            </div>
-          </div>
+          <article class="step-card reveal">
+            <span>3</span>
+            <h3>Oxu</h3>
+            <p>Giriş aktiv olduqda PDF ayrıca pəncərədə açılır.</p>
+          </article>
         </section>
 
         <section class="section-head reveal">
-          <div>
-            <p class="eyebrow">Mövzular üzrə oxu</p>
-            <h2>Populyar bölmələr</h2>
-          </div>
+          <p class="eyebrow">Bölmələr</p>
+          <h2>Populyar istiqamətlər</h2>
         </section>
 
         <div class="category-grid">
@@ -259,75 +239,34 @@
             <small>klassik əsərlər və folklor</small>
           </button>
 
-          <button
-            class="category-card reveal"
-            data-delay="100"
-            data-genre="Rus ədəbiyyatı"
-          >
+          <button class="category-card reveal" data-genre="Rus ədəbiyyatı">
             <span>RU</span>
             <strong>Rus ədəbiyyatı</strong>
-            <small>roman, povest, hekayə</small>
+            <small>roman, povest və hekayələr</small>
           </button>
 
-          <button
-            class="category-card reveal"
-            data-delay="200"
-            data-genre="Dünya klassikası"
-          >
+          <button class="category-card reveal" data-genre="Dünya klassikası">
             <span>KL</span>
             <strong>Dünya klassikası</strong>
-            <small>rus dilində klassik əsərlər</small>
+            <small>klassik dünya ədəbiyyatı</small>
           </button>
 
-          <button
-            class="category-card reveal"
-            data-delay="300"
-            data-genre="Qısa əsərlər"
-          >
+          <button class="category-card reveal" data-genre="Qısa əsərlər">
             <span>QS</span>
             <strong>Qısa əsərlər</strong>
             <small>tez oxunan mətnlər</small>
           </button>
         </div>
-
-        <section class="impact-section reveal">
-          <div class="impact-content">
-            <p class="eyebrow">Layihənin dəyəri</p>
-            <h2>Kitabxananı daha ağıllı və daha əlçatan etmək</h2>
-            <p>
-              ZAHS Rəqəmsal Kitabxana yalnız kataloq deyil — bu, məktəbdə
-              kitabların istifadəsini artıran, vaxt itkisinin qarşısını alan və
-              müasir rəqəmsal məktəb anlayışına uyğunlaşan bir sistemdir.
-            </p>
-          </div>
-          <div class="impact-boxes">
-            <div class="impact-box">
-              <strong>+ Daha sürətli</strong>
-              <span>kitab tapmaq və seçmək</span>
-            </div>
-            <div class="impact-box">
-              <strong>+ Daha rahat</strong>
-              <span>istənilən cihazda oxumaq</span>
-            </div>
-            <div class="impact-box">
-              <strong>+ Daha ağıllı</strong>
-              <span>tövsiyələr və izləmə</span>
-            </div>
-          </div>
-        </section>
       </section>
 
       <section id="catalog" class="view">
         <section class="catalog-header reveal">
-          <div>
-            <p class="eyebrow">Axtarış və filtr</p>
-            <h2>Əsərlər kataloqu</h2>
-            <p>
-              Burada Azərbaycan və rus dillərində oxuna bilən əsərlər
-              göstərilir. PDF faylları saytın özündə,
-              <strong>books/</strong> qovluğunda saxlanmalıdır.
-            </p>
-          </div>
+          <p class="eyebrow">Axtarış və filtr</p>
+          <h2>Əsərlər kataloqu</h2>
+          <p>
+            Azərbaycan və rus dillərində oxuna bilən əsərlər burada göstərilir.
+            Hər şagird eyni anda yalnız bir əsər götürə bilər.
+          </p>
         </section>
 
         <section class="filters reveal">
@@ -381,11 +320,9 @@
 
       <section id="shelf" class="view">
         <section class="catalog-header reveal">
-          <div>
-            <p class="eyebrow">Məhdud müddətli giriş</p>
-            <h2>Mənim rəfim</h2>
-            <p>Burada şagirdin müəyyən müddətə götürdüyü əsərlər görünür.</p>
-          </div>
+          <p class="eyebrow">Məhdud müddətli giriş</p>
+          <h2>Mənim rəfim</h2>
+          <p>Götürülmüş əsər və onun qalan oxu müddəti burada görünür.</p>
         </section>
 
         <div id="shelfGrid" class="book-grid"></div>
@@ -397,20 +334,11 @@
           <h2>Sistemin işləmə prinsipi</h2>
 
           <ol>
-            <li>Şagird 4 rəqəmli kod ilə daxil olur.</li>
+            <li>Şagird 4 rəqəmli kod və sinif şifrəsi ilə daxil olur.</li>
+            <li>Hər şagird eyni anda yalnız bir əsər götürə bilər.</li>
+            <li>Yeni əsər götürmək üçün əvvəlki əsər qaytarılmalıdır.</li>
             <li>Əsərin müddəti səhifə sayına görə avtomatik hesablanır.</li>
-            <li>
-              Qısa əsərlər 3 gün, orta əsərlər 7–14 gün, böyük əsərlər 21 gün
-              verilir.
-            </li>
-            <li>
-              PDF faylları saytın <strong>books/</strong> qovluğunda
-              yerləşməlidir.
-            </li>
-            <li>
-              Müasir əsərlər və yeni tərcümələr üçün icazə və ya lisenziya
-              lazımdır.
-            </li>
+            <li>PDF yalnız aktiv giriş olduqda açılır.</li>
           </ol>
         </section>
       </section>
@@ -422,7 +350,7 @@
 
         <p class="eyebrow">Şagird girişi</p>
         <h2>Kitabxanaya daxil ol</h2>
-        <p>Prototip üçün istənilən 4 rəqəmli kod yaza bilərsən.</p>
+        <p>Giriş üçün 4 rəqəmli şagird kodu və sinif şifrəsini daxil et.</p>
 
         <label>
           Şagird kodu
@@ -435,13 +363,15 @@
         </label>
 
         <label>
-          Ad / sinif
-          <input id="studentName" placeholder="İlyas, 10A" />
+          Şifrə
+          <input
+            id="studentPassword"
+            type="password"
+            placeholder="Sinif şifrəsi"
+          />
         </label>
 
-        <button id="saveLogin" class="primary full magnetic-btn">
-          Daxil ol
-        </button>
+        <button id="saveLogin" class="primary full">Daxil ol</button>
       </div>
     </div>
 
@@ -456,10 +386,7 @@
       <div class="footer-grid">
         <div>
           <h3>ZAHS Rəqəmsal Kitabxana</h3>
-          <p>
-            Məktəb kitabxanasını müasir, rahat və rəqəmsal mühitə daşımaq üçün
-            hazırlanmış full-stack layihə.
-          </p>
+          <p>Akademik Zərifə Əliyeva adına Lisey üçün rəqəmsal oxu mühiti.</p>
         </div>
 
         <div>
@@ -473,18 +400,18 @@
         </div>
 
         <div>
-          <h4>Əsas imkanlar</h4>
+          <h4>İmkanlar</h4>
           <ul>
             <li>Şagird girişi</li>
             <li>PDF oxu</li>
             <li>Filtrləmə</li>
-            <li>Tövsiyə sistemi</li>
+            <li>Tövsiyələr</li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <p>© 2026 ZAHS Digital Library</p>
+        <p>© 2026 ZAHS Rəqəmsal Kitabxana. Bütün hüquqlar qorunur.</p>
       </div>
     </footer>
 

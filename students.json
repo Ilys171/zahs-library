@@ -1,0 +1,30 @@
+[
+  {
+    "student_code": "4837",
+    "password": "10A2026",
+    "name": "Ilyas",
+    "surname": "Tagiyev",
+    "class_name": "10A"
+  },
+  {
+    "student_code": "1234",
+    "password": "10A2026",
+    "name": "Ali",
+    "surname": "Mammadov",
+    "class_name": "10A"
+  },
+  {
+    "student_code": "5678",
+    "password": "10B2026",
+    "name": "Aysel",
+    "surname": "Aliyeva",
+    "class_name": "10B"
+  },
+  {
+    "student_code": "9012",
+    "password": "9A2026",
+    "name": "Murad",
+    "surname": "Hasanov",
+    "class_name": "9A"
+  }
+]

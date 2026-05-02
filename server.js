@@ -22,10 +22,14 @@ function addDays(date, days) {
 }
 
 app.post("/api/login", (req, res) => {
-  const { studentCode } = req.body;
+  const { studentCode, password } = req.body;
 
   if (!studentCode || !/^\d{4}$/.test(studentCode)) {
     return res.status(400).json({ error: "4 rəqəmli şagird kodu lazımdır." });
+  }
+
+  if (!password) {
+    return res.status(400).json({ error: "Şifrə lazımdır." });
   }
 
   const student = db
@@ -36,11 +40,16 @@ app.post("/api/login", (req, res) => {
     return res.status(404).json({ error: "Şagird tapılmadı." });
   }
 
+  if (student.password !== password) {
+    return res.status(401).json({ error: "Şifrə yanlışdır." });
+  }
+
   res.json({
     student: {
       id: student.id,
       studentCode: student.student_code,
       name: student.name,
+      surname: student.surname,
       className: student.class_name,
     },
   });
@@ -103,20 +112,25 @@ app.post("/api/borrow", (req, res) => {
     return res.status(404).json({ error: "Əsər tapılmadı." });
   }
 
-  const existingLoan = db
+  const activeLoan = db
     .prepare(
       `
-    SELECT * FROM loans
-    WHERE student_id = ?
-      AND book_id = ?
-      AND returned_at IS NULL
-      AND datetime(due_at) > datetime('now')
-  `,
+  SELECT
+    loans.*,
+    books.title
+  FROM loans
+  JOIN books ON loans.book_id = books.id
+  WHERE loans.student_id = ?
+    AND loans.returned_at IS NULL
+    AND datetime(loans.due_at) > datetime('now')
+`,
     )
-    .get(studentId, bookId);
+    .get(studentId);
 
-  if (existingLoan) {
-    return res.status(409).json({ error: "Bu əsər artıq sənin rəfindədir." });
+  if (activeLoan) {
+    return res.status(409).json({
+      error: `Sən artıq "${activeLoan.title}" əsərini götürmüsən. Yeni əsər götürmək üçün əvvəlcə onu qaytar.`,
+    });
   }
 
   const now = new Date();
@@ -201,5 +215,7 @@ app.get("/api/read/:bookId", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`ZAL Library backend işləyir: http://localhost:${PORT}`);
+  console.log(
+    `ZAHS Rəqəmsal Kitabxana backend işləyir: http://localhost:${PORT}`,
+  );
 });
