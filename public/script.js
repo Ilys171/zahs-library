@@ -626,3 +626,29 @@ async function init() {
 }
 
 init();
+
+function initRevealAnimations() {
+  const revealItems = document.querySelectorAll(".reveal");
+
+  revealItems.forEach((item) => {
+    const delay = item.dataset.delay || 0;
+    item.style.setProperty("--delay", `${delay}ms`);
+  });
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible-reveal");
+        }
+      });
+    },
+    {
+      threshold: 0.14,
+    },
+  );
+
+  revealItems.forEach((item) => observer.observe(item));
+}
+
+window.addEventListener("load", initRevealAnimations);
