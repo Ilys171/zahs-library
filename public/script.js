@@ -26,7 +26,7 @@ const searchInput = document.getElementById("searchInput");
 const sortSelect = document.getElementById("sortSelect");
 const languageSelect = document.getElementById("languageSelect");
 const genreSelect = document.getElementById("genreSelect");
-const accessSelect = document.getElementById("accessSelect");
+const accessSelect = null;
 
 const headerSearch = document.getElementById("headerSearch");
 const headerSearchButton = document.getElementById("headerSearchButton");
@@ -34,8 +34,91 @@ const headerSearchButton = document.getElementById("headerSearchButton");
 const mobileMenuButton = document.getElementById("mobileMenuButton");
 const mainNav = document.getElementById("mainNav");
 const loginHeroBtn = document.getElementById("loginHeroBtn");
+const langButtons = document.querySelectorAll(".lang-btn");
+
+const feedbackForm = document.getElementById("feedbackForm");
+const feedbackName = document.getElementById("feedbackName");
+const feedbackCategory = document.getElementById("feedbackCategory");
+const feedbackRating = document.getElementById("feedbackRating");
+const feedbackMessage = document.getElementById("feedbackMessage");
+const feedbackStatus = document.getElementById("feedbackStatus");
+
+const openFeedbacksButton = document.getElementById("openFeedbacksButton");
+const feedbacksModal = document.getElementById("feedbacksModal");
+const closeFeedbacks = document.getElementById("closeFeedbacks");
+const feedbacksList = document.getElementById("feedbacksList");
 
 let revealObserver = null;
+
+const translations = {
+  az: {
+    navHome: "Ana səhifə",
+    navCatalog: "Kataloq",
+    navShelf: "Mənim rəfim",
+    navRules: "Qaydalar",
+
+    login: "Daxil ol",
+    logout: "Çıxış",
+
+    heroEyebrow: "Rəqəmsal kitabxana",
+    heroTitle: "ZAHS kitabxanasına rahat və müasir giriş.",
+    heroText:
+      "Azərbaycan və rus dillərində əsərlərin axtarışı, seçimi və oxunması üçün hazırlanmış sadə və istifadəsi rahat kitabxana mühiti.",
+
+    catalogButton: "Kataloqa bax",
+    studentLogin: "Şagird girişi",
+    adminLogin: "Admin girişi",
+    goCatalog: "Kataloqa keç",
+
+    searchPlaceholder: "Search...",
+  },
+
+  ru: {
+    navHome: "Главная",
+    navCatalog: "Каталог",
+    navShelf: "Моя полка",
+    navRules: "Правила",
+
+    login: "Войти",
+    logout: "Выйти",
+
+    heroEyebrow: "Цифровая библиотека",
+    heroTitle: "Удобный и современный доступ к библиотеке ZAHS.",
+    heroText:
+      "Простая и удобная библиотечная среда для поиска, выбора и чтения произведений на азербайджанском и русском языках.",
+
+    catalogButton: "Открыть каталог",
+    studentLogin: "Вход ученика",
+    adminLogin: "Вход админа",
+    goCatalog: "Перейти в каталог",
+
+    searchPlaceholder: "Поиск...",
+  },
+
+  en: {
+    navHome: "Home",
+    navCatalog: "Catalog",
+    navShelf: "My shelf",
+    navRules: "Rules",
+
+    login: "Log in",
+    logout: "Log out",
+
+    heroEyebrow: "Digital library",
+    heroTitle: "Easy and modern access to the ZAHS library.",
+    heroText:
+      "A simple and user-friendly library environment for searching, choosing, and reading works in Azerbaijani and Russian.",
+
+    catalogButton: "View catalog",
+    studentLogin: "Student login",
+    adminLogin: "Admin login",
+    goCatalog: "Go to catalog",
+
+    searchPlaceholder: "Search...",
+  },
+};
+
+let currentLang = localStorage.getItem("zahsLang") || "az";
 
 function saveUser() {
   localStorage.setItem("zahsUser", JSON.stringify(state.user));
@@ -43,6 +126,35 @@ function saveUser() {
 
 function removeUser() {
   localStorage.removeItem("zahsUser");
+}
+
+function t(key) {
+  return translations[currentLang]?.[key] || translations.az[key] || key;
+}
+
+function applyTranslations() {
+  document.querySelectorAll("[data-i18n]").forEach((element) => {
+    const key = element.dataset.i18n;
+    element.textContent = t(key);
+  });
+
+  if (headerSearch) {
+    headerSearch.placeholder = t("searchPlaceholder");
+  }
+
+  langButtons.forEach((button) => {
+    button.classList.toggle("active", button.dataset.lang === currentLang);
+  });
+}
+
+function setLanguage(lang) {
+  if (!translations[lang]) return;
+
+  currentLang = lang;
+  localStorage.setItem("zahsLang", lang);
+
+  applyTranslations();
+  updateLoginButton();
 }
 
 async function apiRequest(url, options = {}) {
@@ -154,7 +266,7 @@ function updateLoginButton() {
   if (state.user) {
     const name = state.user.name || "Şagird";
     const surname = state.user.surname || "";
-    const className = state.user.className || "";
+    const className = state.user.className || state.user.class_name || "";
 
     accountLabel.textContent = `${name} ${surname} · ${className}`;
     accountLabel.classList.remove("hidden");
@@ -163,18 +275,18 @@ function updateLoginButton() {
     logoutButton.classList.remove("hidden");
 
     if (loginHeroBtn) {
-      loginHeroBtn.textContent = "Kataloqa keç";
+      loginHeroBtn.textContent = t("goCatalog");
     }
   } else {
     accountLabel.textContent = "";
     accountLabel.classList.add("hidden");
 
-    loginButton.textContent = "Daxil ol";
+    loginButton.textContent = t("login");
     loginButton.classList.remove("hidden");
     logoutButton.classList.add("hidden");
 
     if (loginHeroBtn) {
-      loginHeroBtn.textContent = "Şagird girişi";
+      loginHeroBtn.textContent = t("studentLogin");
     }
   }
 }
@@ -185,10 +297,13 @@ function updateStats() {
   const borrowedBooks = document.getElementById("borrowedBooks");
 
   if (totalBooks) totalBooks.textContent = books.length;
-  if (safeBooks)
+
+  if (safeBooks) {
     safeBooks.textContent = books.filter(
-      (book) => book.access === "safe",
+      (book) => book.access === "safe" || book.access_status === "safe",
     ).length;
+  }
+
   if (borrowedBooks) borrowedBooks.textContent = activeLoans.length;
 }
 
@@ -225,14 +340,17 @@ function filteredBooks() {
       .toLowerCase();
 
     const matchesQuery = text.includes(query);
+
     const matchesLanguage =
       !languageSelect ||
       languageSelect.value === "all" ||
       book.language === languageSelect.value;
+
     const matchesGenre =
       !genreSelect ||
       genreSelect.value === "all" ||
       book.genre === genreSelect.value;
+
     const matchesAccess =
       !accessSelect ||
       accessSelect.value === "all" ||
@@ -272,9 +390,6 @@ function bookCard(book) {
     <div class="book-meta">
       <span class="pill gold">${book.year || "—"}</span>
       <span class="pill">${book.pages} səh.</span>
-      <span class="pill ${book.access === "safe" ? "safe" : "review"}">
-        ${book.access === "safe" ? "təhlükəsiz başlanğıc" : "versiya yoxlanmalıdır"}
-      </span>
       <span class="pill">${loanDays} günlük giriş</span>
       ${active ? `<span class="pill safe">${remaining} gün qalıb</span>` : ""}
     </div>
@@ -498,7 +613,7 @@ function showBookInfo(bookId) {
 
     <div class="notice">
       Giriş müddəti: <strong>${getLoanDays(book)} gün</strong><br>
-      Status: <strong>${book.access === "safe" ? "təhlükəsiz başlanğıc" : "versiya yoxlanmalıdır"}</strong>
+      Səhifə sayı: <strong>${book.pages}</strong>
     </div>
 
     <div class="reader-body">
@@ -675,6 +790,144 @@ function runHeaderSearch() {
   }
 }
 
+async function submitFeedback(event) {
+  event.preventDefault();
+
+  if (!feedbackStatus) return;
+
+  feedbackStatus.className = "feedback-status";
+  feedbackStatus.textContent = "";
+
+  const name = feedbackName ? feedbackName.value.trim() : "";
+  const category = feedbackCategory ? feedbackCategory.value : "";
+  const rating = feedbackRating ? feedbackRating.value : "";
+  const message = feedbackMessage ? feedbackMessage.value.trim() : "";
+
+  if (!category) {
+    feedbackStatus.textContent = "Rəy növünü seç.";
+    feedbackStatus.classList.add("error");
+    return;
+  }
+
+  if (!rating) {
+    feedbackStatus.textContent = "Qiymət seç.";
+    feedbackStatus.classList.add("error");
+    return;
+  }
+
+  if (message.length < 5) {
+    feedbackStatus.textContent = "Rəy ən azı 5 simvol olmalıdır.";
+    feedbackStatus.classList.add("error");
+    return;
+  }
+
+  try {
+    await apiRequest("/api/feedback", {
+      method: "POST",
+      body: JSON.stringify({
+        studentId: state.user ? state.user.id : null,
+        name,
+        category,
+        rating,
+        message,
+      }),
+    });
+
+    feedbackForm.reset();
+
+    feedbackStatus.textContent = "Təşəkkürlər! Rəyin göndərildi.";
+    feedbackStatus.classList.add("success");
+  } catch (error) {
+    feedbackStatus.textContent = error.message;
+    feedbackStatus.classList.add("error");
+  }
+}
+
+function getStars(rating) {
+  const number = Math.max(1, Math.min(5, Number(rating) || 1));
+  return "★".repeat(number) + "☆".repeat(5 - number);
+}
+
+function formatFeedbackDate(dateText) {
+  const date = new Date(dateText);
+
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  return date.toLocaleDateString("az-AZ", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+
+async function loadPublicFeedbacks() {
+  if (!feedbacksList) return;
+
+  feedbacksList.innerHTML = `
+    <div class="empty-state">Rəylər yüklənir...</div>
+  `;
+
+  try {
+    const feedbacks = await apiRequest("/api/feedbacks");
+
+    if (!feedbacks.length) {
+      feedbacksList.innerHTML = `
+        <div class="empty-state">
+          Hələ ictimai rəy yoxdur. İlk rəyi sən göndərə bilərsən.
+        </div>
+      `;
+      return;
+    }
+
+    feedbacksList.innerHTML = "";
+
+    feedbacks.forEach((feedback) => {
+      const card = document.createElement("article");
+      card.className = "public-feedback-card";
+
+      card.innerHTML = `
+        <div class="public-feedback-top">
+          <div class="public-feedback-name">
+            ${escapeHtml(feedback.name || "Anonim istifadəçi")}
+          </div>
+          <div class="public-feedback-date">
+            ${escapeHtml(formatFeedbackDate(feedback.created_at))}
+          </div>
+        </div>
+
+        <div class="public-feedback-stars">
+          ${escapeHtml(getStars(feedback.rating))}
+        </div>
+
+        <div class="public-feedback-category">
+          ${escapeHtml(feedback.category)}
+        </div>
+
+        <p class="public-feedback-message">
+          ${escapeHtml(feedback.message)}
+        </p>
+      `;
+
+      feedbacksList.appendChild(card);
+    });
+  } catch (error) {
+    feedbacksList.innerHTML = `
+      <div class="empty-state">
+        Rəylər yüklənmədi. Serverin işlədiyinə əmin ol.
+      </div>
+    `;
+  }
+}
+
+function openFeedbacksModal() {
+  if (!feedbacksModal) return;
+
+  feedbacksModal.classList.remove("hidden");
+  loadPublicFeedbacks();
+}
+
 document.body.addEventListener("click", (event) => {
   const borrowId = event.target.dataset.borrow;
   const returnId = event.target.dataset.return;
@@ -710,13 +963,50 @@ navLinks.forEach((link) => {
   },
 );
 
-loginButton.addEventListener("click", openLogin);
-logoutButton.addEventListener("click", logoutUser);
+if (feedbackForm) {
+  feedbackForm.addEventListener("submit", submitFeedback);
+}
+
+langButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    setLanguage(button.dataset.lang);
+  });
+});
+
+if (openFeedbacksButton) {
+  openFeedbacksButton.addEventListener("click", openFeedbacksModal);
+}
+
+if (closeFeedbacks) {
+  closeFeedbacks.addEventListener("click", () => {
+    feedbacksModal.classList.add("hidden");
+  });
+}
+
+if (loginButton) {
+  loginButton.addEventListener("click", openLogin);
+}
+
+if (logoutButton) {
+  logoutButton.addEventListener("click", logoutUser);
+}
 
 if (loginHeroBtn) {
   loginHeroBtn.addEventListener("click", () => {
     if (state.user) {
       showView("catalog");
+    } else {
+      openLogin();
+    }
+  });
+}
+
+const footerLoginBtn = document.getElementById("footerLoginBtn");
+
+if (footerLoginBtn) {
+  footerLoginBtn.addEventListener("click", () => {
+    if (state.user) {
+      showView("shelf");
     } else {
       openLogin();
     }
@@ -741,17 +1031,24 @@ if (headerSearch) {
   });
 }
 
-closeLogin.addEventListener("click", () => {
-  loginModal.classList.add("hidden");
-});
+if (closeLogin) {
+  closeLogin.addEventListener("click", () => {
+    loginModal.classList.add("hidden");
+  });
+}
 
-closeInfo.addEventListener("click", () => {
-  infoModal.classList.add("hidden");
-});
+if (closeInfo) {
+  closeInfo.addEventListener("click", () => {
+    infoModal.classList.add("hidden");
+  });
+}
 
-saveLogin.addEventListener("click", loginUser);
+if (saveLogin) {
+  saveLogin.addEventListener("click", loginUser);
+}
 
 async function init() {
+  applyTranslations();
   updateLoginButton();
   initRevealAnimations();
 

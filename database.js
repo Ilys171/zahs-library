@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const Database = require("better-sqlite3");
+const { PDFDocument } = require("pdf-lib");
 
 const db = new Database("library.db");
 
@@ -37,7 +38,37 @@ db.exec(`
     FOREIGN KEY (student_id) REFERENCES students(id),
     FOREIGN KEY (book_id) REFERENCES books(id)
   );
+
+  CREATE TABLE IF NOT EXISTS feedbacks (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  student_id INTEGER,
+  name TEXT,
+  category TEXT NOT NULL,
+  rating INTEGER NOT NULL,
+  message TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  status TEXT DEFAULT 'new',
+  FOREIGN KEY (student_id) REFERENCES students(id)
+  );
 `);
+
+async function getPdfPageCount(pdfPath) {
+  try {
+    const fullPath = path.join(__dirname, "public", pdfPath);
+
+    if (!fs.existsSync(fullPath)) {
+      console.warn(`PDF tapılmadı: ${pdfPath}. Səhifə sayı 1 olaraq yazıldı.`);
+      return 1;
+    }
+
+    const pdfBytes = fs.readFileSync(fullPath);
+    const pdfDoc = await PDFDocument.load(pdfBytes);
+    return pdfDoc.getPageCount();
+  } catch (error) {
+    console.warn(`PDF oxunmadı: ${pdfPath}. Səhifə sayı 1 olaraq yazıldı.`);
+    return 1;
+  }
+}
 
 function seedStudents() {
   const studentCount = db
@@ -75,14 +106,20 @@ function seedStudents() {
   console.log(`${students.length} şagird bazaya əlavə edildi.`);
 }
 
-function seedBooks() {
-  const bookCount = db
-    .prepare("SELECT COUNT(*) AS count FROM books")
-    .get().count;
+async function seedBooks() {
+  const booksPath = path.join(__dirname, "books-data.json");
 
-  if (bookCount > 0) {
+  if (!fs.existsSync(booksPath)) {
+    console.warn("books-data.json tapılmadı. Kitablar əlavə edilmədi.");
     return;
   }
+
+  const books = JSON.parse(fs.readFileSync(booksPath, "utf-8"));
+
+  const findBook = db.prepare(`
+    SELECT id FROM books
+    WHERE title = ? AND author = ?
+  `);
 
   const insertBook = db.prepare(`
     INSERT INTO books (
@@ -91,70 +128,69 @@ function seedBooks() {
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
 
-  insertBook.run(
-    "Poçt qutusu",
-    "Cəlil Məmmədquluzadə",
-    "1903",
-    "AZ",
-    "Qısa əsərlər",
-    20,
-    "safe",
-    "books/poct-qutusu.pdf",
-    "Qısa və məktəb üçün rahat klassik əsər.",
-  );
+  const updateBook = db.prepare(`
+    UPDATE books
+    SET
+      year = ?,
+      language = ?,
+      genre = ?,
+      pages = ?,
+      access_status = ?,
+      pdf_path = ?,
+      note = ?
+    WHERE id = ?
+  `);
 
-  insertBook.run(
-    "Şineli",
-    "Nikolay Qoqol",
-    "1842",
-    "RU",
-    "Qısa əsərlər",
-    55,
-    "safe",
-    "books/shinel.pdf",
-    "Çox güclü qısa rus klassikası.",
-  );
+  let inserted = 0;
+  let updated = 0;
 
-  insertBook.run(
-    "Revizor",
-    "Nikolay Qoqol",
-    "1836",
-    "RU",
-    "Rus ədəbiyyatı",
-    120,
-    "safe",
-    "books/revizor.pdf",
-    "Satira və teatr bölməsi üçün uyğundur.",
-  );
+  for (const book of books) {
+    const pageCount = book.pages
+      ? Number(book.pages)
+      : await getPdfPageCount(book.pdf_path);
 
-  insertBook.run(
-    "Mumu",
-    "İvan Turgenev",
-    "1854",
-    "RU",
-    "Qısa əsərlər",
-    60,
-    "safe",
-    "books/mumu.pdf",
-    "Qısa və emosional klassik əsər.",
-  );
+    const existingBook = findBook.get(book.title, book.author);
 
-  insertBook.run(
-    "Ölülər",
-    "Cəlil Məmmədquluzadə",
-    "1909",
-    "AZ",
-    "Azərbaycan ədəbiyyatı",
-    100,
-    "safe",
-    "books/oluler.pdf",
-    "Müzakirə və analiz üçün güclü əsər.",
-  );
+    if (existingBook) {
+      updateBook.run(
+        book.year || "",
+        book.language,
+        book.genre,
+        pageCount,
+        book.access_status || "safe",
+        book.pdf_path,
+        book.note || "",
+        existingBook.id,
+      );
 
-  console.log("Başlanğıc kitablar bazaya əlavə edildi.");
+      updated++;
+    } else {
+      insertBook.run(
+        book.title,
+        book.author,
+        book.year || "",
+        book.language,
+        book.genre,
+        pageCount,
+        book.access_status || "safe",
+        book.pdf_path,
+        book.note || "",
+      );
+
+      inserted++;
+    }
+  }
+
+  console.log(`${inserted} kitab əlavə edildi, ${updated} kitab yeniləndi.`);
 }
 
-seedStudents();
-seedBooks();
+async function initDatabase() {
+  seedStudents();
+  await seedBooks();
+}
+
+initDatabase().catch((error) => {
+  console.error("Database initialization error:", error);
+});
 
 module.exports = db;

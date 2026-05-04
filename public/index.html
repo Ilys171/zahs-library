@@ -10,37 +10,52 @@
     <header class="zahs-header">
       <div class="zahs-top">
         <div class="zahs-top-inner">
-          <div class="zahs-brand">
+          <a
+            class="zahs-brand"
+            href="https://www.z-aliyeva.edu.az/az/"
+            target="_blank"
+            rel="noopener"
+          >
             <div class="zahs-logo-card">
               <img
                 src="images/logo-white.png"
-                alt="ZAHS logo"
+                alt="Akademik Zərifə Əliyeva adına lisey"
                 onerror="this.style.display = 'none'"
               />
-              <span><img src="images/logo-white.png" alt="logo" /></span>
+              <span>ZAHS</span>
             </div>
 
             <div class="zahs-brand-text">
               <h1>Akademik Zərifə Əliyeva</h1>
               <p>adına liseyin rəqəmsal kitabxanası</p>
             </div>
-          </div>
+          </a>
 
           <div class="zahs-right">
-            <div class="zahs-search">
-              <input id="headerSearch" type="text" placeholder="Search..." />
-              <button id="headerSearchButton" aria-label="Search">⌕</button>
-            </div>
+  <div class="language-switcher">
+    <button class="lang-btn active" data-lang="az">AZ</button>
+    <button class="lang-btn" data-lang="ru">RU</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
 
-            <div class="zahs-avatar">
-              <img
-                src="images/avatar.png"
-                alt="ZAHS"
-                onerror="this.style.display = 'none'"
-              />
-            </div>
-          </div>
-        </div>
+  <div class="zahs-search">
+    <input id="headerSearch" type="text" placeholder="Search..." />
+    <button id="headerSearchButton" aria-label="Search">⌕</button>
+  </div>
+
+  <a
+    class="zahs-avatar"
+    href="https://zarifa-aliyeva.az/"
+    target="_blank"
+    rel="noopener"
+  >
+    <img
+      src="images/avatar.png"
+      alt="Akademik Zərifə Əliyeva"
+      onerror="this.style.display = 'none'"
+    />
+  </a>
+</div>
       </div>
 
       <div class="zahs-nav-wrap">
@@ -56,18 +71,28 @@
           </button>
 
           <nav class="zahs-nav" id="mainNav">
-            <button class="nav-link active" data-view="home">Ana səhifə</button>
-            <button class="nav-link" data-view="catalog">Kataloq</button>
-            <button class="nav-link" data-view="shelf">Mənim rəfim</button>
-            <button class="nav-link" data-view="rules">Qaydalar</button>
-          </nav>
+  <button class="nav-link active" data-view="home" data-i18n="navHome">
+    Ana səhifə
+  </button>
+  <button class="nav-link" data-view="catalog" data-i18n="navCatalog">
+    Kataloq
+  </button>
+  <button class="nav-link" data-view="shelf" data-i18n="navShelf">
+    Mənim rəfim
+  </button>
+  <button class="nav-link" data-view="rules" data-i18n="navRules">
+    Qaydalar
+  </button>
+</nav>
 
           <div class="auth-actions">
             <span id="accountLabel" class="account-label hidden"></span>
-            <button id="loginButton" class="login-button">Daxil ol</button>
-            <button id="logoutButton" class="logout-button hidden">
-              Çıxış
-            </button>
+            <button id="loginButton" class="login-button" data-i18n="login">
+  Daxil ol
+</button>
+<button id="logoutButton" class="logout-button hidden" data-i18n="logout">
+  Çıxış
+</button>
           </div>
 
           <div class="zahs-header-line"></div>
@@ -79,18 +104,26 @@
       <section id="home" class="view visible">
         <section class="hero-section reveal">
           <div class="hero-main">
-            <p class="eyebrow">Rəqəmsal kitabxana</p>
-            <h2>ZAHS kitabxanasına rahat və müasir giriş.</h2>
-            <p>
-              Azərbaycan və rus dillərində əsərlərin axtarışı, seçimi və
-              oxunması üçün hazırlanmış sadə və istifadəsi rahat kitabxana
-              mühiti.
-            </p>
+            <p class="eyebrow" data-i18n="heroEyebrow">Rəqəmsal kitabxana</p>
+<h2 data-i18n="heroTitle">ZAHS kitabxanasına rahat və müasir giriş.</h2>
+<p data-i18n="heroText">
+  Azərbaycan və rus dillərində əsərlərin axtarışı, seçimi və oxunması üçün
+  hazırlanmış sadə və istifadəsi rahat kitabxana mühiti.
+</p>
 
             <div class="hero-actions">
-              <button class="primary" data-go="catalog">Kataloqa bax</button>
-              <button class="secondary" id="loginHeroBtn">Şagird girişi</button>
-            </div>
+  <button class="primary" data-go="catalog" data-i18n="catalogButton">
+    Kataloqa bax
+  </button>
+
+  <button class="secondary" id="loginHeroBtn" data-i18n="studentLogin">
+    Şagird girişi
+  </button>
+
+  <a class="secondary hero-admin-link" href="/admin.html" data-i18n="adminLogin">
+    Admin girişi
+  </a>
+</div>
           </div>
 
           <aside class="hero-stats">
@@ -304,15 +337,6 @@
               <option value="all">Hamısı</option>
             </select>
           </label>
-
-          <label>
-            Status
-            <select id="accessSelect">
-              <option value="all">Hamısı</option>
-              <option value="safe">Təhlükəsiz başlanğıc</option>
-              <option value="review">Versiya yoxlanmalıdır</option>
-            </select>
-          </label>
         </section>
 
         <div id="catalogGrid" class="book-grid"></div>
@@ -341,6 +365,90 @@
             <li>PDF yalnız aktiv giriş olduqda açılır.</li>
           </ol>
         </section>
+      </section>
+
+      <section id="feedbackSection" class="feedback-section reveal">
+        <div class="feedback-card">
+          <div>
+            <p class="eyebrow">Rəy və təkliflər</p>
+            <h2>Sayt haqqında fikrini göndər</h2>
+            <p>
+              Kitabxananın daha rahat işləməsi üçün irad, təklif və fikirlərini
+              buradan göndərə bilərsən.
+            </p>
+          </div>
+
+          <form id="feedbackForm" class="feedback-form">
+            <label>
+              Adın
+              <input
+                id="feedbackName"
+                type="text"
+                placeholder="İstəyə görə"
+                maxlength="80"
+              />
+            </label>
+
+            <label>
+              Rəy növü
+              <select id="feedbackCategory" required>
+                <option value="">Seç</option>
+                <option value="problem">Problem</option>
+                <option value="suggestion">Təklif</option>
+                <option value="design">Dizayn haqqında</option>
+                <option value="books">Kitablar haqqında</option>
+                <option value="other">Digər</option>
+              </select>
+            </label>
+
+            <label>
+              Qiymət
+              <select id="feedbackRating" required>
+                <option value="">Seç</option>
+                <option value="5">5 — Əla</option>
+                <option value="4">4 — Yaxşı</option>
+                <option value="3">3 — Normal</option>
+                <option value="2">2 — Zəif</option>
+                <option value="1">1 — Pis</option>
+              </select>
+            </label>
+
+            <label class="feedback-full">
+              Rəyin
+              <textarea
+                id="feedbackMessage"
+                rows="5"
+                required
+                maxlength="1000"
+                placeholder="Məsələn: Axtarış hissəsi rahatdır, amma kitabların kateqoriyası daha aydın ola bilər..."
+              ></textarea>
+            </label>
+
+            <button class="primary feedback-full" type="submit">
+              Rəyi göndər
+            </button>
+
+            <div
+              id="feedbackStatus"
+              class="feedback-status feedback-full"
+            ></div>
+          </form>
+        </div>
+
+        <div class="feedback-public-panel reveal">
+          <div>
+            <p class="eyebrow">İctimai rəylər</p>
+            <h3>Digər istifadəçilərin fikirlərinə bax</h3>
+            <p>
+              Saytdan istifadə edən şagirdlərin və oxucuların rəyləri burada
+              göstərilir.
+            </p>
+          </div>
+
+          <button id="openFeedbacksButton" class="secondary" type="button">
+            Digər rəylərə bax
+          </button>
+        </div>
       </section>
     </main>
 
@@ -382,30 +490,101 @@
       </div>
     </div>
 
+    <div id="feedbacksModal" class="modal hidden">
+      <div class="reader-card feedbacks-reader">
+        <button class="close" id="closeFeedbacks">×</button>
+
+        <p class="eyebrow">İctimai rəylər</p>
+        <h2 class="reader-title">Digər istifadəçilərin fikirləri</h2>
+        <p class="feedback-modal-intro">
+          Bu bölmədə sayt haqqında göndərilən real rəylər göstərilir.
+        </p>
+
+        <div id="feedbacksList" class="feedbacks-list">
+          <div class="empty-state">Rəylər yüklənir...</div>
+        </div>
+      </div>
+    </div>
+
     <footer class="site-footer">
       <div class="footer-grid">
-        <div>
+        <div class="footer-about">
           <h3>ZAHS Rəqəmsal Kitabxana</h3>
-          <p>Akademik Zərifə Əliyeva adına Lisey üçün rəqəmsal oxu mühiti.</p>
+          <p>
+            Akademik Zərifə Əliyeva adına Lisey üçün rəqəmsal oxu mühiti.
+            Əsərlərin axtarışı, götürülməsi və oxunması üçün sadə kitabxana
+            sistemi.
+          </p>
         </div>
 
         <div>
           <h4>Bölmələr</h4>
-          <ul>
-            <li>Ana səhifə</li>
-            <li>Kataloq</li>
-            <li>Mənim rəfim</li>
-            <li>Qaydalar</li>
+          <ul class="footer-links">
+            <li>
+              <button class="footer-link" data-go="home">Ana səhifə</button>
+            </li>
+            <li>
+              <button class="footer-link" data-go="catalog">Kataloq</button>
+            </li>
+            <li>
+              <button class="footer-link" data-go="shelf">Mənim rəfim</button>
+            </li>
+            <li>
+              <button class="footer-link" data-go="rules">Qaydalar</button>
+            </li>
           </ul>
         </div>
 
         <div>
           <h4>İmkanlar</h4>
-          <ul>
-            <li>Şagird girişi</li>
-            <li>PDF oxu</li>
-            <li>Filtrləmə</li>
-            <li>Tövsiyələr</li>
+          <ul class="footer-links">
+            <li>
+              <button class="footer-link" id="footerLoginBtn">
+                Şagird girişi
+              </button>
+            </li>
+            <li>
+              <button class="footer-link" data-go="catalog">PDF oxu</button>
+            </li>
+            <li>
+              <button class="footer-link" data-go="catalog">Filtrləmə</button>
+            </li>
+            <li>
+              <button class="footer-link" data-go="home">Tövsiyələr</button>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Rəsmi keçidlər</h4>
+          <ul class="footer-links">
+            <li>
+              <a
+                class="footer-link anchor-link"
+                href="https://www.z-aliyeva.edu.az/az/"
+                target="_blank"
+                rel="noopener"
+              >
+                Liseyin saytı
+              </a>
+            </li>
+
+            <li>
+              <a
+                class="footer-link anchor-link"
+                href="https://zarifa-aliyeva.az/"
+                target="_blank"
+                rel="noopener"
+              >
+                Akademik Zərifə Əliyeva
+              </a>
+            </li>
+
+            <li>
+              <a class="footer-link anchor-link" href="/admin.html">
+                Admin girişi
+              </a>
+            </li>
           </ul>
         </div>
       </div>

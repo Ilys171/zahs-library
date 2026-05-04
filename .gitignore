@@ -1,5 +1,7 @@
 node_modules/
 library.db
+students.json
+admins.json
 .env
 .DS_Store
 Thumbs.db

@@ -1,0 +1,102 @@
+[
+  {
+    "title": "Poçt qutusu",
+    "author": "Cəlil Məmmədquluzadə",
+    "year": "1903",
+    "language": "AZ",
+    "genre": "Qısa əsərlər",
+    "access_status": "safe",
+    "pdf_path": "books/poct-qutusu.pdf",
+    "note": "Qısa və məktəb üçün rahat klassik əsər."
+  },
+  {
+    "title": "Ölülər",
+    "author": "Cəlil Məmmədquluzadə",
+    "year": "1909",
+    "language": "AZ",
+    "genre": "Azərbaycan ədəbiyyatı",
+    "access_status": "safe",
+    "pdf_path": "books/oluler.pdf",
+    "note": "Müzakirə və analiz üçün güclü əsər."
+  },
+  {
+    "title": "Müsyö Jordan və Dərviş Məstəli şah",
+    "author": "Mirzə Fətəli Axundov",
+    "year": "1850",
+    "language": "AZ",
+    "genre": "Azərbaycan ədəbiyyatı",
+    "access_status": "safe",
+    "pdf_path": "books/musyo-jordan.pdf",
+    "note": "Qısa və məktəb üçün rahat komediya."
+  },
+  {
+    "title": "Kitabi-Dədə Qorqud",
+    "author": "Oğuz dastanı",
+    "year": "Xalq dastanı",
+    "language": "AZ",
+    "genre": "Azərbaycan ədəbiyyatı",
+    "access_status": "safe",
+    "pdf_path": "books/dede-qorqud.pdf",
+    "note": "Azərbaycan folkloru və mədəni irsi üçün əsas əsərlərdən biridir."
+  },
+  {
+    "title": "Koroğlu",
+    "author": "Xalq dastanı",
+    "year": "Xalq dastanı",
+    "language": "AZ",
+    "genre": "Azərbaycan ədəbiyyatı",
+    "access_status": "safe",
+    "pdf_path": "books/koroglu.pdf",
+    "note": "Qəhrəmanlıq dastanı kimi kataloq üçün güclü seçimdir."
+  },
+  {
+    "title": "Шинель",
+    "author": "Николай Гоголь",
+    "year": "1842",
+    "language": "RU",
+    "genre": "Короткие произведения",
+    "access_status": "safe",
+    "pdf_path": "books/shinel.pdf",
+    "note": "Короткое классическое произведение русской литературы."
+  },
+  {
+    "title": "Ревизор",
+    "author": "Николай Гоголь",
+    "year": "1836",
+    "language": "RU",
+    "genre": "Русская литература",
+    "access_status": "safe",
+    "pdf_path": "books/revizor.pdf",
+    "note": "Классическая сатирическая пьеса."
+  },
+  {
+    "title": "Муму",
+    "author": "Иван Тургенев",
+    "year": "1854",
+    "language": "RU",
+    "genre": "Короткие произведения",
+    "access_status": "safe",
+    "pdf_path": "books/mumu.pdf",
+    "note": "Короткое и эмоциональное произведение русской классики."
+  },
+  {
+    "title": "Белые ночи",
+    "author": "Фёдор Достоевский",
+    "year": "1848",
+    "language": "RU",
+    "genre": "Qısa əsərlər",
+    "access_status": "safe",
+    "pdf_path": "books/belye-nochi.pdf",
+    "note": "Dostoyevskidən qısa və oxunaqlı seçim."
+  },
+  {
+    "title": "Капитанская дочка",
+    "author": "Александр Пушкин",
+    "year": "1836",
+    "language": "RU",
+    "genre": "Rus ədəbiyyatı",
+    "access_status": "safe",
+    "pdf_path": "books/kapitanskaya-dochka.pdf",
+    "note": "Məktəb oxusu üçün klassik və rahat əsər."
+  }
+]

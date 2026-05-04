@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="az">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZAHS Kitabxana Admin</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="admin-page">
+      <section id="adminLoginCard" class="admin-card">
+        <p class="eyebrow">Admin girişi</p>
+        <h1>Admin panelə daxil ol</h1>
+        <p class="admin-subtitle">
+          Kitab əlavə etmək üçün admin login və şifrəsini daxil et.
+        </p>
+
+        <form id="adminLoginForm" class="admin-form">
+          <label>
+            Login
+            <input name="username" required placeholder="ilyas" />
+          </label>
+
+          <label>
+            Şifrə
+            <input
+              name="password"
+              type="password"
+              required
+              placeholder="Admin şifrəsi"
+            />
+          </label>
+
+          <button class="primary full-field" type="submit">Daxil ol</button>
+        </form>
+
+        <div id="adminLoginMessage" class="admin-message"></div>
+      </section>
+
+      <section id="adminBookCard" class="admin-card hidden">
+        <div class="admin-topline">
+          <div>
+            <p class="eyebrow">Admin panel</p>
+            <h1>Yeni kitab əlavə et</h1>
+            <p id="adminNameLabel" class="admin-subtitle"></p>
+          </div>
+
+          <button id="adminLogoutButton" class="secondary">Çıxış</button>
+        </div>
+
+        <p class="admin-subtitle">
+          Buradan kitab məlumatlarını daxil edib PDF faylını yükləyə bilərsən.
+          PDF faylı yükləndikdən sonra səhifə sayı avtomatik hesablanacaq.
+        </p>
+
+        <form id="bookForm" class="admin-form">
+          <label>
+            Kitab adı
+            <input name="title" required placeholder="Məsələn: Шинель" />
+          </label>
+
+          <label>
+            Müəllif
+            <input
+              name="author"
+              required
+              placeholder="Məsələn: Николай Гоголь"
+            />
+          </label>
+
+          <label>
+            İl
+            <input name="year" placeholder="1842" />
+          </label>
+
+          <label>
+            Dil
+            <select name="language" required>
+              <option value="AZ">AZ</option>
+              <option value="RU">RU</option>
+            </select>
+          </label>
+
+          <label>
+            Janr
+            <input
+              name="genre"
+              required
+              placeholder="Qısa əsərlər / Русская литература"
+            />
+          </label>
+
+          <label class="full-field">
+            Qeyd
+            <textarea
+              name="note"
+              rows="4"
+              placeholder="Qısa təsvir..."
+            ></textarea>
+          </label>
+
+          <label class="full-field">
+            PDF faylı
+            <input name="pdf" type="file" accept="application/pdf" required />
+          </label>
+
+          <button class="primary full-field" type="submit">
+            Kitabı əlavə et
+          </button>
+        </form>
+
+        <div id="adminMessage" class="admin-message"></div>
+
+        <a class="admin-back" href="/">← Kitabxanaya qayıt</a>
+      </section>
+    </main>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

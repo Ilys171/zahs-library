@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Poçt qutusu",
+    "author": "Cəlil Məmmədquluzadə",
+    "year": "1903",
+    "language": "AZ",
+    "genre": "Qısa əsərlər",
+    "pages": 20,
+    "access_status": "safe",
+    "pdfFile": "poct-qutusu.pdf",
+    "note": "Qısa və məktəb üçün rahat klassik əsər.",
+    "downloadUrl": ""
+  },
+  {
+    "title": "Ölülər",
+    "author": "Cəlil Məmmədquluzadə",
+    "year": "1909",
+    "language": "AZ",
+    "genre": "Azərbaycan ədəbiyyatı",
+    "pages": 100,
+    "access_status": "safe",
+    "pdfFile": "oluler.pdf",
+    "note": "Müzakirə və analiz üçün güclü əsər.",
+    "downloadUrl": ""
+  },
+  {
+    "title": "Şinel",
+    "author": "Nikolay Qoqol",
+    "year": "1842",
+    "language": "RU",
+    "genre": "Qısa əsərlər",
+    "pages": 55,
+    "access_status": "safe",
+    "pdfFile": "shinel.pdf",
+    "note": "Çox güclü qısa rus klassikası.",
+    "downloadUrl": ""
+  }
+]
