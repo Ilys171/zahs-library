@@ -36,14 +36,18 @@
 
           <div class="zahs-right">
             <div class="language-switcher">
-              <button class="lang-btn active" data-lang="az">AZ</button>
-              <button class="lang-btn" data-lang="ru">RU</button>
-              <button class="lang-btn" data-lang="en">EN</button>
+              <button class="lang-btn active" data-lang="az" type="button">
+                AZ
+              </button>
+              <button class="lang-btn" data-lang="ru" type="button">RU</button>
+              <button class="lang-btn" data-lang="en" type="button">EN</button>
             </div>
 
             <div class="zahs-search">
               <input id="headerSearch" type="text" placeholder="Search..." />
-              <button id="headerSearchButton" aria-label="Search">⌕</button>
+              <button id="headerSearchButton" aria-label="Search" type="button">
+                ⌕
+              </button>
             </div>
 
             <a
@@ -68,6 +72,9 @@
             class="mobile-menu-button"
             id="mobileMenuButton"
             aria-label="Menyunu aç"
+            aria-controls="mainNav"
+            aria-expanded="false"
+            type="button"
           >
             <span></span>
             <span></span>
@@ -79,29 +86,56 @@
               class="nav-link active"
               data-view="home"
               data-i18n="navHome"
+              type="button"
             >
               Ana səhifə
             </button>
-            <button class="nav-link" data-view="catalog" data-i18n="navCatalog">
+
+            <button
+              class="nav-link"
+              data-view="catalog"
+              data-i18n="navCatalog"
+              type="button"
+            >
               Kataloq
             </button>
-            <button class="nav-link" data-view="shelf" data-i18n="navShelf">
+
+            <button
+              class="nav-link"
+              data-view="shelf"
+              data-i18n="navShelf"
+              type="button"
+            >
               Mənim rəfim
             </button>
-            <button class="nav-link" data-view="rules" data-i18n="navRules">
+
+            <button
+              class="nav-link"
+              data-view="rules"
+              data-i18n="navRules"
+              type="button"
+            >
               Qaydalar
             </button>
           </nav>
 
           <div class="auth-actions">
             <span id="accountLabel" class="account-label hidden"></span>
-            <button id="loginButton" class="login-button" data-i18n="login">
+
+            <button
+              id="loginButton"
+              class="login-button"
+              data-i18n="login"
+              type="button"
+            >
               Daxil ol
             </button>
+
             <button
               id="logoutButton"
               class="logout-button hidden"
               data-i18n="logout"
+              type="button"
             >
               Çıxış
             </button>
@@ -117,9 +151,11 @@
         <section class="hero-section reveal">
           <div class="hero-main">
             <p class="eyebrow" data-i18n="heroEyebrow">Rəqəmsal kitabxana</p>
+
             <h2 data-i18n="heroTitle">
               ZAHS kitabxanasına rahat və müasir giriş.
             </h2>
+
             <p data-i18n="heroText">
               Azərbaycan və rus dillərində əsərlərin axtarışı, seçimi və
               oxunması üçün hazırlanmış sadə və istifadəsi rahat kitabxana
@@ -131,22 +167,27 @@
                 class="primary"
                 data-go="catalog"
                 data-i18n="catalogButton"
+                type="button"
               >
                 Kataloqa bax
               </button>
+
               <button
                 class="secondary"
                 id="loginHeroBtn"
                 data-i18n="studentLogin"
+                type="button"
               >
                 Şagird girişi
               </button>
+
               <a
                 class="secondary hero-admin-link"
                 href="/admin.html"
                 data-i18n="adminLogin"
-                >Admin girişi</a
               >
+                Admin girişi
+              </a>
             </div>
           </div>
 
@@ -155,6 +196,7 @@
               <strong id="totalBooks">0</strong>
               <span data-i18n="statWorks">əsər</span>
             </div>
+
             <div class="stat-box">
               <strong id="borrowedBooks">0</strong>
               <span data-i18n="statShelf">mənim rəfimdə</span>
@@ -170,6 +212,7 @@
               </p>
               <h2 data-i18n="impactTitle">Kitabxananın real istifadəsi</h2>
             </div>
+
             <p data-i18n="impactText">
               Bu göstəricilər rəqəmsal kitabxananın məktəb daxilində necə
               istifadə olunduğunu göstərir.
@@ -181,21 +224,25 @@
               <strong id="impactBooks">0</strong>
               <span data-i18n="impactBooksLabel">rəqəmsal kitab</span>
             </article>
+
             <article class="impact-card">
               <strong id="impactUsers">0</strong>
               <span data-i18n="impactUsersLabel">qeydiyyatlı şagird</span>
             </article>
+
             <article class="impact-card">
               <strong id="impactReadings">0</strong>
               <span data-i18n="impactReadingsLabel">başladılmış oxu</span>
             </article>
+
             <article class="impact-card">
               <strong id="impactFeedbacks">0</strong>
               <span data-i18n="impactFeedbacksLabel">toplanmış rəy</span>
             </article>
+
             <article class="impact-card">
               <strong id="impactRequests">0</strong>
-              <span data-i18n="impactRequestsLabel">kitab təklifi</span>
+              <span data-i18n="impactRequestsLabel">kitab istəyi</span>
             </article>
           </div>
         </section>
@@ -209,6 +256,7 @@
               mümkündür.
             </p>
           </article>
+
           <article class="info-card">
             <span>02</span>
             <h3 data-i18n="infoAccessTitle">Müddətli giriş</h3>
@@ -216,6 +264,7 @@
               Oxu müddəti əsərin həcminə görə avtomatik hesablanır.
             </p>
           </article>
+
           <article class="info-card">
             <span>03</span>
             <h3 data-i18n="infoOneBookTitle">Bir kitab qaydası</h3>
@@ -228,9 +277,11 @@
         <section class="content-row">
           <article class="about-card reveal">
             <p class="eyebrow" data-i18n="aboutEyebrow">Kitabxana haqqında</p>
+
             <h2 data-i18n="aboutTitle">
               Oxu prosesini daha sadə və nizamlı edən sistem.
             </h2>
+
             <p data-i18n="aboutText">
               Rəqəmsal kitabxana fiziki kitab fondunu axtarıla bilən, izlənilə
               bilən və müxtəlif cihazlardan istifadə edilə bilən oxu mühitinə
@@ -240,23 +291,25 @@
             <div class="about-points">
               <div>
                 <strong data-i18n="aboutPointSearchTitle">Tez axtarış</strong>
-                <span data-i18n="aboutPointSearchText"
-                  >Əsər, müəllif və janr üzrə nəticələr</span
-                >
+                <span data-i18n="aboutPointSearchText">
+                  Əsər, müəllif və janr üzrə nəticələr
+                </span>
               </div>
+
               <div>
                 <strong data-i18n="aboutPointControlTitle">Oxu nəzarəti</strong>
-                <span data-i18n="aboutPointControlText"
-                  >Aktiv giriş və qalan günlərin izlənməsi</span
-                >
+                <span data-i18n="aboutPointControlText">
+                  Aktiv giriş və qalan günlərin izlənməsi
+                </span>
               </div>
+
               <div>
                 <strong data-i18n="aboutPointRecommendTitle"
                   >Uyğun tövsiyələr</strong
                 >
-                <span data-i18n="aboutPointRecommendText"
-                  >Oxu seçimlərinə əsaslanan təkliflər</span
-                >
+                <span data-i18n="aboutPointRecommendText">
+                  Oxu seçimlərinə əsaslanan təkliflər
+                </span>
               </div>
             </div>
           </article>
@@ -276,6 +329,7 @@
                 </p>
               </div>
             </div>
+
             <div class="notice-item">
               <time>02</time>
               <div>
@@ -285,6 +339,7 @@
                 </p>
               </div>
             </div>
+
             <div class="notice-item">
               <time>03</time>
               <div>
@@ -317,6 +372,7 @@
               Şagird 4 rəqəmli kod və sinif şifrəsi ilə daxil olur.
             </p>
           </article>
+
           <article class="step-card reveal">
             <span>2</span>
             <h3 data-i18n="stepChooseTitle">Əsər seç</h3>
@@ -324,6 +380,7 @@
               Kataloqdan uyğun əsər axtarılır və götürülür.
             </p>
           </article>
+
           <article class="step-card reveal">
             <span>3</span>
             <h3 data-i18n="stepReadTitle">Oxu</h3>
@@ -342,24 +399,40 @@
           <button
             class="category-card reveal"
             data-genre="Azərbaycan ədəbiyyatı"
+            type="button"
           >
             <span>AZ</span>
             <strong data-i18n="categoryAzTitle">Azərbaycan ədəbiyyatı</strong>
             <small data-i18n="categoryAzText">klassik əsərlər və folklor</small>
           </button>
-          <button class="category-card reveal" data-genre="Русская литература">
+
+          <button
+            class="category-card reveal"
+            data-genre="Русская литература"
+            type="button"
+          >
             <span>RU</span>
             <strong data-i18n="categoryRuTitle">Rus ədəbiyyatı</strong>
             <small data-i18n="categoryRuText">roman, povest və hekayələr</small>
           </button>
-          <button class="category-card reveal" data-genre="Dünya klassikası">
+
+          <button
+            class="category-card reveal"
+            data-genre="Dünya klassikası"
+            type="button"
+          >
             <span>KL</span>
             <strong data-i18n="categoryWorldTitle">Dünya klassikası</strong>
             <small data-i18n="categoryWorldText"
               >klassik dünya ədəbiyyatı</small
             >
           </button>
-          <button class="category-card reveal" data-genre="Qısa əsərlər">
+
+          <button
+            class="category-card reveal"
+            data-genre="Qısa əsərlər"
+            type="button"
+          >
             <span>QS</span>
             <strong data-i18n="categoryShortTitle">Qısa əsərlər</strong>
             <small data-i18n="categoryShortText">tez oxunan mətnlər</small>
@@ -386,6 +459,7 @@
               placeholder="Əsər, müəllif, janr..."
             />
           </label>
+
           <label>
             <span data-i18n="filterSort">Sıralama</span>
             <select id="sortSelect">
@@ -399,14 +473,17 @@
               </option>
             </select>
           </label>
+
           <label>
             <span data-i18n="filterLanguage">Dil</span>
             <select id="languageSelect">
               <option value="all" data-i18n="allOption">Hamısı</option>
               <option value="AZ" data-i18n="azLanguage">Azərbaycan dili</option>
               <option value="RU" data-i18n="ruLanguage">Rus dili</option>
+              <option value="EN">English</option>
             </select>
           </label>
+
           <label>
             <span data-i18n="filterGenre">Janr</span>
             <select id="genreSelect">
@@ -444,6 +521,7 @@
         <section class="rules-card reveal">
           <p class="eyebrow" data-i18n="rulesEyebrow">Kitabxana qaydaları</p>
           <h2 data-i18n="rulesTitle">Sistemin işləmə prinsipi</h2>
+
           <ol>
             <li data-i18n="ruleOne">
               Şagird 4 rəqəmli kod və sinif şifrəsi ilə daxil olur.
@@ -462,6 +540,62 @@
         </section>
       </section>
 
+      <section id="bookRequestSection" class="book-request-section reveal">
+        <div class="book-request-card">
+          <div>
+            <p class="eyebrow" data-i18n="bookRequestEyebrow">Kitab istəyi</p>
+            <h2 data-i18n="bookRequestTitle">Kitabxanaya kitab təklif et</h2>
+            <p data-i18n="bookRequestText">
+              Kitabxanada görmək istədiyin əsəri buradan təklif edə bilərsən.
+            </p>
+          </div>
+
+          <form id="bookRequestForm" class="book-request-form">
+            <label>
+              <span data-i18n="requestNameLabel">Adın</span>
+              <input id="requestName" type="text" maxlength="80" />
+            </label>
+
+            <label>
+              <span data-i18n="requestTitleLabel">Kitab adı</span>
+              <input id="requestTitle" type="text" maxlength="160" required />
+            </label>
+
+            <label>
+              <span data-i18n="requestAuthorLabel">Müəllif</span>
+              <input id="requestAuthor" type="text" maxlength="120" />
+            </label>
+
+            <label>
+              <span data-i18n="requestLanguageLabel">Dil</span>
+              <select id="requestLanguage">
+                <option value="AZ">AZ</option>
+                <option value="RU">RU</option>
+                <option value="EN">EN</option>
+              </select>
+            </label>
+
+            <label class="book-request-full">
+              <span data-i18n="requestReasonLabel">Niyə əlavə olunsun?</span>
+              <textarea id="requestReason" rows="4" maxlength="600"></textarea>
+            </label>
+
+            <button
+              class="primary book-request-full"
+              type="submit"
+              data-i18n="sendRequest"
+            >
+              Kitab istəyi göndər
+            </button>
+
+            <div
+              id="requestStatus"
+              class="book-request-status book-request-full"
+            ></div>
+          </form>
+        </div>
+      </section>
+
       <section id="feedbackSection" class="feedback-section reveal">
         <div class="feedback-card">
           <div>
@@ -476,13 +610,9 @@
           <form id="feedbackForm" class="feedback-form">
             <label>
               <span data-i18n="feedbackNameLabel">Adın</span>
-              <input
-                id="feedbackName"
-                type="text"
-                placeholder="İstəyə görə"
-                maxlength="80"
-              />
+              <input id="feedbackName" type="text" maxlength="80" />
             </label>
+
             <label>
               <span data-i18n="feedbackCategoryLabel">Rəy növü</span>
               <select id="feedbackCategory" required>
@@ -502,6 +632,7 @@
                 <option value="other" data-i18n="feedbackOther">Digər</option>
               </select>
             </label>
+
             <label>
               <span data-i18n="feedbackRatingLabel">Qiymət</span>
               <select id="feedbackRating" required>
@@ -513,6 +644,7 @@
                 <option value="1" data-i18n="ratingOne">1 — Pis</option>
               </select>
             </label>
+
             <label class="feedback-full">
               <span data-i18n="feedbackMessageLabel">Rəyin</span>
               <textarea
@@ -520,9 +652,9 @@
                 rows="5"
                 required
                 maxlength="1000"
-                placeholder="Məsələn: Axtarış hissəsi rahatdır, amma kitabların kateqoriyası daha aydın ola bilər..."
               ></textarea>
             </label>
+
             <button
               class="primary feedback-full"
               type="submit"
@@ -530,6 +662,7 @@
             >
               Rəyi göndər
             </button>
+
             <div
               id="feedbackStatus"
               class="feedback-status feedback-full"
@@ -550,6 +683,7 @@
               göstərilir.
             </p>
           </div>
+
           <button
             id="openFeedbacksButton"
             class="secondary"
@@ -560,88 +694,18 @@
           </button>
         </div>
       </section>
-
-      <section id="bookRequestSection" class="request-section reveal">
-        <div class="request-card">
-          <div>
-            <p class="eyebrow" data-i18n="requestEyebrow">Kitab təklifi</p>
-            <h2 data-i18n="requestTitle">
-              Kitabxanada görmək istədiyin kitabı təklif et
-            </h2>
-            <p data-i18n="requestText">
-              Şagirdlər hansı kitabların əlavə olunmasını istədiyini yaza bilər.
-              Bu, kitabxananın real ehtiyaca görə böyüməsinə kömək edir.
-            </p>
-          </div>
-
-          <form id="bookRequestForm" class="request-form">
-            <label>
-              <span data-i18n="requestNameLabel">Adın</span>
-              <input
-                id="requestName"
-                type="text"
-                maxlength="80"
-                placeholder="İstəyə görə"
-              />
-            </label>
-            <label>
-              <span data-i18n="requestBookTitleLabel">Kitab adı</span>
-              <input
-                id="requestTitle"
-                type="text"
-                maxlength="160"
-                required
-                placeholder="Kitab adı"
-              />
-            </label>
-            <label>
-              <span data-i18n="requestAuthorLabel">Müəllif</span>
-              <input
-                id="requestAuthor"
-                type="text"
-                maxlength="120"
-                placeholder="Müəllif bilinirsə"
-              />
-            </label>
-            <label>
-              <span data-i18n="requestLanguageLabel">Dil</span>
-              <select id="requestLanguage">
-                <option value="AZ">AZ</option>
-                <option value="RU">RU</option>
-                <option value="EN">EN</option>
-                <option value="OTHER">OTHER</option>
-              </select>
-            </label>
-            <label class="request-full">
-              <span data-i18n="requestReasonLabel">Niyə əlavə olunsun?</span>
-              <textarea
-                id="requestReason"
-                rows="4"
-                maxlength="600"
-                placeholder="Bu kitab niyə əlavə olunsa yaxşı olar?"
-              ></textarea>
-            </label>
-            <button
-              class="primary request-full"
-              type="submit"
-              data-i18n="requestSubmit"
-            >
-              Kitabı təklif et
-            </button>
-            <div id="requestStatus" class="feedback-status request-full"></div>
-          </form>
-        </div>
-      </section>
     </main>
 
     <div id="loginModal" class="modal hidden">
       <div class="modal-card">
-        <button class="close" id="closeLogin">×</button>
+        <button class="close" id="closeLogin" type="button">×</button>
+
         <p class="eyebrow" data-i18n="studentLogin">Şagird girişi</p>
         <h2 data-i18n="loginModalTitle">Kitabxanaya daxil ol</h2>
         <p data-i18n="loginModalText">
           Giriş üçün 4 rəqəmli şagird kodu və sinif şifrəsini daxil et.
         </p>
+
         <label>
           <span data-i18n="studentCodeLabel">Şagird kodu</span>
           <input
@@ -651,6 +715,7 @@
             placeholder="4837"
           />
         </label>
+
         <label>
           <span data-i18n="passwordLabel">Şifrə</span>
           <input
@@ -659,7 +724,13 @@
             placeholder="Sinif şifrəsi"
           />
         </label>
-        <button id="saveLogin" class="primary full" data-i18n="login">
+
+        <button
+          id="saveLogin"
+          class="primary full"
+          type="button"
+          data-i18n="login"
+        >
           Daxil ol
         </button>
       </div>
@@ -667,14 +738,15 @@
 
     <div id="infoModal" class="modal hidden">
       <div class="reader-card">
-        <button class="close" id="closeInfo">×</button>
+        <button class="close" id="closeInfo" type="button">×</button>
         <div id="infoContent"></div>
       </div>
     </div>
 
     <div id="feedbacksModal" class="modal hidden">
       <div class="reader-card feedbacks-reader">
-        <button class="close" id="closeFeedbacks">×</button>
+        <button class="close" id="closeFeedbacks" type="button">×</button>
+
         <p class="eyebrow" data-i18n="publicFeedbackEyebrow">İctimai rəylər</p>
         <h2 class="reader-title" data-i18n="feedbacksModalTitle">
           Digər istifadəçilərin fikirləri
@@ -682,6 +754,7 @@
         <p class="feedback-modal-intro" data-i18n="feedbacksModalText">
           Bu bölmədə sayt haqqında göndərilən real rəylər göstərilir.
         </p>
+
         <div id="feedbacksList" class="feedbacks-list">
           <div class="empty-state" data-i18n="feedbacksLoading">
             Rəylər yüklənir...
@@ -700,11 +773,17 @@
             sistemi.
           </p>
         </div>
+
         <div>
           <h4 data-i18n="footerSections">Bölmələr</h4>
           <ul class="footer-links">
             <li>
-              <button class="footer-link" data-go="home" data-i18n="navHome">
+              <button
+                class="footer-link"
+                data-go="home"
+                data-i18n="navHome"
+                type="button"
+              >
                 Ana səhifə
               </button>
             </li>
@@ -713,22 +792,34 @@
                 class="footer-link"
                 data-go="catalog"
                 data-i18n="navCatalog"
+                type="button"
               >
                 Kataloq
               </button>
             </li>
             <li>
-              <button class="footer-link" data-go="shelf" data-i18n="navShelf">
+              <button
+                class="footer-link"
+                data-go="shelf"
+                data-i18n="navShelf"
+                type="button"
+              >
                 Mənim rəfim
               </button>
             </li>
             <li>
-              <button class="footer-link" data-go="rules" data-i18n="navRules">
+              <button
+                class="footer-link"
+                data-go="rules"
+                data-i18n="navRules"
+                type="button"
+              >
                 Qaydalar
               </button>
             </li>
           </ul>
         </div>
+
         <div>
           <h4 data-i18n="footerFeatures">İmkanlar</h4>
           <ul class="footer-links">
@@ -737,6 +828,7 @@
                 class="footer-link"
                 id="footerLoginBtn"
                 data-i18n="studentLogin"
+                type="button"
               >
                 Şagird girişi
               </button>
@@ -746,6 +838,7 @@
                 class="footer-link"
                 data-go="catalog"
                 data-i18n="footerPdf"
+                type="button"
               >
                 PDF oxu
               </button>
@@ -755,6 +848,7 @@
                 class="footer-link"
                 data-go="catalog"
                 data-i18n="footerFilter"
+                type="button"
               >
                 Filtrləmə
               </button>
@@ -764,12 +858,14 @@
                 class="footer-link"
                 data-go="home"
                 data-i18n="recommendEyebrow"
+                type="button"
               >
                 Tövsiyələr
               </button>
             </li>
           </ul>
         </div>
+
         <div>
           <h4 data-i18n="footerOfficial">Rəsmi keçidlər</h4>
           <ul class="footer-links">
@@ -780,9 +876,11 @@
                 target="_blank"
                 rel="noopener"
                 data-i18n="footerSchool"
-                >Liseyin saytı</a
               >
+                Liseyin saytı
+              </a>
             </li>
+
             <li>
               <a
                 class="footer-link anchor-link"
@@ -790,20 +888,24 @@
                 target="_blank"
                 rel="noopener"
                 data-i18n="footerZarifa"
-                >Akademik Zərifə Əliyeva</a
               >
+                Akademik Zərifə Əliyeva
+              </a>
             </li>
+
             <li>
               <a
                 class="footer-link anchor-link"
                 href="/admin.html"
                 data-i18n="adminLogin"
-                >Admin girişi</a
               >
+                Admin girişi
+              </a>
             </li>
           </ul>
         </div>
       </div>
+
       <div class="footer-bottom">
         <p data-i18n="footerRights">
           © 2026 ZAHS Rəqəmsal Kitabxana. Bütün hüquqlar qorunur.
