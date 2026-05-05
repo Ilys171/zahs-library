@@ -3,115 +3,306 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ZAHS Kitabxana Admin</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>ZAHS Admin Panel</title>
+    <link rel="stylesheet" href="admin.css" />
   </head>
+
   <body>
     <main class="admin-page">
+      <section class="admin-hero">
+        <div>
+          <p class="eyebrow" data-admin-i18n="adminEyebrow">Admin panel</p>
+          <h1 data-admin-i18n="adminTitle">ZAHS Rəqəmsal Kitabxana</h1>
+          <p data-admin-i18n="adminSubtitle">
+            Kitabları əlavə et, statistikaya bax, rəyləri və kitab istəklərini
+            idarə et.
+          </p>
+        </div>
+
+        <div class="admin-hero-actions">
+          <div class="admin-language-switcher">
+            <button class="admin-lang-btn active" data-admin-lang="az">
+              AZ
+            </button>
+            <button class="admin-lang-btn" data-admin-lang="ru">RU</button>
+            <button class="admin-lang-btn" data-admin-lang="en">EN</button>
+          </div>
+
+          <a class="admin-back-link" href="/" data-admin-i18n="backToSite">
+            ← Kitabxanaya qayıt
+          </a>
+        </div>
+      </section>
+
       <section id="adminLoginCard" class="admin-card">
-        <p class="eyebrow">Admin girişi</p>
-        <h1>Admin panelə daxil ol</h1>
-        <p class="admin-subtitle">
-          Kitab əlavə etmək üçün admin login və şifrəsini daxil et.
+        <p class="eyebrow" data-admin-i18n="loginEyebrow">Giriş</p>
+        <h2 data-admin-i18n="loginTitle">Admin hesabına daxil ol</h2>
+        <p class="admin-subtitle" data-admin-i18n="loginSubtitle">
+          Kitab əlavə etmək və statistikaya baxmaq üçün admin hesabına daxil ol.
         </p>
 
         <form id="adminLoginForm" class="admin-form">
           <label>
-            Login
-            <input name="username" required placeholder="ilyas" />
-          </label>
-
-          <label>
-            Şifrə
+            <span data-admin-i18n="usernameLabel">Login</span>
             <input
-              name="password"
-              type="password"
+              name="username"
+              type="text"
+              autocomplete="username"
               required
-              placeholder="Admin şifrəsi"
             />
           </label>
 
-          <button class="primary full-field" type="submit">Daxil ol</button>
+          <label>
+            <span data-admin-i18n="passwordLabel">Şifrə</span>
+            <input
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required
+            />
+          </label>
+
+          <button
+            class="primary full-field"
+            type="submit"
+            data-admin-i18n="loginButton"
+          >
+            Daxil ol
+          </button>
         </form>
 
         <div id="adminLoginMessage" class="admin-message"></div>
       </section>
 
-      <section id="adminBookCard" class="admin-card hidden">
-        <div class="admin-topline">
-          <div>
-            <p class="eyebrow">Admin panel</p>
-            <h1>Yeni kitab əlavə et</h1>
-            <p id="adminNameLabel" class="admin-subtitle"></p>
-          </div>
-
-          <button id="adminLogoutButton" class="secondary">Çıxış</button>
+      <section id="adminTopBar" class="admin-topbar hidden">
+        <div>
+          <span data-admin-i18n="loggedInAs">Daxil olan admin:</span>
+          <strong id="adminNameLabel">—</strong>
         </div>
 
-        <p class="admin-subtitle">
-          Buradan kitab məlumatlarını daxil edib PDF faylını yükləyə bilərsən.
-          PDF faylı yükləndikdən sonra səhifə sayı avtomatik hesablanacaq.
+        <button
+          id="adminLogoutButton"
+          class="danger-button"
+          type="button"
+          data-admin-i18n="logoutButton"
+        >
+          Çıxış
+        </button>
+      </section>
+
+      <section id="adminAnalyticsCard" class="admin-card hidden">
+        <div class="admin-section-head">
+          <div>
+            <p class="eyebrow" data-admin-i18n="analyticsEyebrow">Analytics</p>
+            <h2 data-admin-i18n="analyticsTitle">Kitabxana statistikası</h2>
+            <p class="admin-subtitle" data-admin-i18n="analyticsSubtitle">
+              Burada kitabxananın istifadəsi, oxu aktivliyi və istifadəçi
+              reaksiyaları göstərilir.
+            </p>
+          </div>
+
+          <button
+            id="refreshAnalyticsButton"
+            class="secondary"
+            type="button"
+            data-admin-i18n="refreshButton"
+          >
+            Yenilə
+          </button>
+        </div>
+
+        <div class="admin-analytics-grid">
+          <article class="admin-stat-card">
+            <strong id="adminTotalBooks">0</strong>
+            <span data-admin-i18n="booksStat">Kitab</span>
+          </article>
+
+          <article class="admin-stat-card">
+            <strong id="adminTotalStudents">0</strong>
+            <span data-admin-i18n="studentsStat">Şagird</span>
+          </article>
+
+          <article class="admin-stat-card">
+            <strong id="adminTotalReadings">0</strong>
+            <span data-admin-i18n="readingsStat">Oxu başlanıb</span>
+          </article>
+
+          <article class="admin-stat-card">
+            <strong id="adminActiveReadings">0</strong>
+            <span data-admin-i18n="activeReadingsStat">Aktiv oxu</span>
+          </article>
+
+          <article class="admin-stat-card">
+            <strong id="adminTotalFeedbacks">0</strong>
+            <span data-admin-i18n="feedbacksStat">Rəy</span>
+          </article>
+
+          <article class="admin-stat-card">
+            <strong id="adminTotalBookRequests">0</strong>
+            <span data-admin-i18n="requestsStat">Kitab istəyi</span>
+          </article>
+        </div>
+
+        <div class="admin-panels-grid">
+          <section class="admin-mini-panel">
+            <h3 data-admin-i18n="topBooksTitle">Ən çox oxunan kitablar</h3>
+            <div id="adminTopBooksList" class="admin-data-list">
+              <div class="admin-empty" data-admin-i18n="noReadingData">
+                Hələ oxu məlumatı yoxdur.
+              </div>
+            </div>
+          </section>
+
+          <section class="admin-mini-panel">
+            <h3 data-admin-i18n="topGenresTitle">Ən çox oxunan janrlar</h3>
+            <div id="adminTopGenresList" class="admin-data-list">
+              <div class="admin-empty" data-admin-i18n="noGenreData">
+                Hələ janr məlumatı yoxdur.
+              </div>
+            </div>
+          </section>
+
+          <section class="admin-mini-panel">
+            <h3 data-admin-i18n="recentFeedbacksTitle">Son rəylər</h3>
+            <div id="adminRecentFeedbacksList" class="admin-data-list">
+              <div class="admin-empty" data-admin-i18n="noFeedbacks">
+                Hələ rəy yoxdur.
+              </div>
+            </div>
+          </section>
+
+          <section class="admin-mini-panel">
+            <h3 data-admin-i18n="recentRequestsTitle">Son kitab istəkləri</h3>
+            <div id="adminRecentBookRequestsList" class="admin-data-list">
+              <div class="admin-empty" data-admin-i18n="noRequests">
+                Hələ kitab istəyi yoxdur.
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="adminBookCard" class="admin-card hidden">
+        <p class="eyebrow" data-admin-i18n="addBookEyebrow">Kitab əlavə et</p>
+        <h2 data-admin-i18n="addBookTitle">Yeni kitab əlavə et</h2>
+        <p class="admin-subtitle" data-admin-i18n="addBookSubtitle">
+          PDF faylını yüklə. Səhifə sayı avtomatik hesablanacaq.
         </p>
 
         <form id="bookForm" class="admin-form">
           <label>
-            Kitab adı
-            <input name="title" required placeholder="Məsələn: Шинель" />
+            <span data-admin-i18n="bookTitleLabel">Kitab adı</span>
+            <input name="title" type="text" required />
           </label>
 
           <label>
-            Müəllif
-            <input
-              name="author"
-              required
-              placeholder="Məsələn: Николай Гоголь"
-            />
+            <span data-admin-i18n="bookAuthorLabel">Müəllif</span>
+            <input name="author" type="text" required />
           </label>
 
           <label>
-            İl
-            <input name="year" placeholder="1842" />
+            <span data-admin-i18n="bookYearLabel">İl</span>
+            <input name="year" type="text" />
           </label>
 
           <label>
-            Dil
+            <span data-admin-i18n="bookLanguageLabel">Dil</span>
             <select name="language" required>
               <option value="AZ">AZ</option>
               <option value="RU">RU</option>
+              <option value="EN">EN</option>
             </select>
           </label>
 
           <label>
-            Janr
-            <input
-              name="genre"
-              required
-              placeholder="Qısa əsərlər / Русская литература"
-            />
+            <span data-admin-i18n="bookGenreLabel">Janr</span>
+            <input name="genre" type="text" required />
+          </label>
+
+          <label>
+            <span data-admin-i18n="bookAccessLabel">Status</span>
+            <select name="accessStatus">
+              <option value="safe">safe</option>
+              <option value="review">review</option>
+            </select>
           </label>
 
           <label class="full-field">
-            Qeyd
-            <textarea
-              name="note"
-              rows="4"
-              placeholder="Qısa təsvir..."
-            ></textarea>
+            <span data-admin-i18n="bookNoteLabel">Qısa təsvir</span>
+            <textarea name="note" rows="4"></textarea>
           </label>
 
           <label class="full-field">
-            PDF faylı
+            <span data-admin-i18n="bookPdfLabel">PDF faylı</span>
             <input name="pdf" type="file" accept="application/pdf" required />
           </label>
 
-          <button class="primary full-field" type="submit">
+          <button
+            class="primary full-field"
+            type="submit"
+            data-admin-i18n="addBookButton"
+          >
             Kitabı əlavə et
           </button>
         </form>
 
         <div id="adminMessage" class="admin-message"></div>
+      </section>
 
-        <a class="admin-back" href="/">← Kitabxanaya qayıt</a>
+      <section id="adminFeedbacksCard" class="admin-card hidden">
+        <div class="admin-section-head">
+          <div>
+            <p class="eyebrow" data-admin-i18n="feedbacksEyebrow">Rəylər</p>
+            <h2 data-admin-i18n="feedbacksTitle">İstifadəçi rəyləri</h2>
+            <p class="admin-subtitle" data-admin-i18n="feedbacksSubtitle">
+              Sayt haqqında göndərilən rəylər burada görünür.
+            </p>
+          </div>
+
+          <button
+            id="refreshFeedbacksButton"
+            class="secondary"
+            type="button"
+            data-admin-i18n="refreshButton"
+          >
+            Yenilə
+          </button>
+        </div>
+
+        <div id="adminFeedbacksFullList" class="admin-data-list">
+          <div class="admin-empty" data-admin-i18n="noFeedbacks">
+            Hələ rəy yoxdur.
+          </div>
+        </div>
+      </section>
+
+      <section id="adminRequestsCard" class="admin-card hidden">
+        <div class="admin-section-head">
+          <div>
+            <p class="eyebrow" data-admin-i18n="requestsEyebrow">
+              Kitab istəkləri
+            </p>
+            <h2 data-admin-i18n="requestsTitle">Təklif olunan kitablar</h2>
+            <p class="admin-subtitle" data-admin-i18n="requestsSubtitle">
+              Şagirdlərin kitabxanada görmək istədiyi kitablar.
+            </p>
+          </div>
+
+          <button
+            id="refreshRequestsButton"
+            class="secondary"
+            type="button"
+            data-admin-i18n="refreshButton"
+          >
+            Yenilə
+          </button>
+        </div>
+
+        <div id="adminRequestsFullList" class="admin-data-list">
+          <div class="admin-empty" data-admin-i18n="noRequests">
+            Hələ kitab istəyi yoxdur.
+          </div>
+        </div>
       </section>
     </main>
 

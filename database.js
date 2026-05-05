@@ -50,6 +50,19 @@ db.exec(`
   status TEXT DEFAULT 'new',
   FOREIGN KEY (student_id) REFERENCES students(id)
   );
+
+  CREATE TABLE IF NOT EXISTS book_requests (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  student_id INTEGER,
+  name TEXT,
+  title TEXT NOT NULL,
+  author TEXT,
+  language TEXT,
+  reason TEXT,
+  created_at TEXT NOT NULL,
+  status TEXT DEFAULT 'new',
+  FOREIGN KEY (student_id) REFERENCES students(id)
+);
 `);
 
 async function getPdfPageCount(pdfPath) {

@@ -5,9 +5,10 @@
     "year": "1903",
     "language": "AZ",
     "genre": "Qısa əsərlər",
+    "pages": 20,
     "access_status": "safe",
     "pdf_path": "books/poct-qutusu.pdf",
-    "note": "Qısa və məktəb üçün rahat klassik əsər."
+    "note": "Cəlil Məmmədquluzadənin qısa satirik hekayəsidir. Əsər savadsızlıq, sadəlövhlük və cəmiyyətin geriliyini tənqidi şəkildə göstərir."
   },
   {
     "title": "Ölülər",
@@ -15,9 +16,10 @@
     "year": "1909",
     "language": "AZ",
     "genre": "Azərbaycan ədəbiyyatı",
+    "pages": 100,
     "access_status": "safe",
     "pdf_path": "books/oluler.pdf",
-    "note": "Müzakirə və analiz üçün güclü əsər."
+    "note": "Azərbaycan dramaturgiyasının ən güclü satirik əsərlərindən biridir. Əsərdə cəhalət, fanatizm və düşüncəsiz itaət kəskin tənqid olunur."
   },
   {
     "title": "Müsyö Jordan və Dərviş Məstəli şah",
@@ -25,9 +27,10 @@
     "year": "1850",
     "language": "AZ",
     "genre": "Azərbaycan ədəbiyyatı",
+    "pages": 72,
     "access_status": "safe",
     "pdf_path": "books/musyo-jordan.pdf",
-    "note": "Qısa və məktəb üçün rahat komediya."
+    "note": "Maarifçilik ruhunda yazılmış komediyadır. Əsər elmə açıq düşüncə ilə mövhumat arasındakı qarşıdurmanı yumorla göstərir."
   },
   {
     "title": "Kitabi-Dədə Qorqud",
@@ -35,9 +38,10 @@
     "year": "Xalq dastanı",
     "language": "AZ",
     "genre": "Azərbaycan ədəbiyyatı",
+    "pages": 180,
     "access_status": "safe",
     "pdf_path": "books/dede-qorqud.pdf",
-    "note": "Azərbaycan folkloru və mədəni irsi üçün əsas əsərlərdən biridir."
+    "note": "Oğuz türklərinin qəhrəmanlıq, ailə, igidlik və mənəvi dəyərlərini əks etdirən əsas dastanlardan biridir. Azərbaycan mədəni irsinin mühüm mətnlərindəndir."
   },
   {
     "title": "Koroğlu",
@@ -45,9 +49,10 @@
     "year": "Xalq dastanı",
     "language": "AZ",
     "genre": "Azərbaycan ədəbiyyatı",
+    "pages": 220,
     "access_status": "safe",
     "pdf_path": "books/koroglu.pdf",
-    "note": "Qəhrəmanlıq dastanı kimi kataloq üçün güclü seçimdir."
+    "note": "Xalq qəhrəmanı Koroğlunun ədalət, mərdlik və azadlıq uğrunda mübarizəsindən bəhs edən dastandır. Əsər Azərbaycan folklorunun ən tanınmış nümunələrindəndir."
   },
   {
     "title": "Шинель",
@@ -55,9 +60,10 @@
     "year": "1842",
     "language": "RU",
     "genre": "Короткие произведения",
+    "pages": 55,
     "access_status": "safe",
     "pdf_path": "books/shinel.pdf",
-    "note": "Короткое классическое произведение русской литературы."
+    "note": "Короткая повесть о маленьком чиновнике, чья жизнь меняется из-за новой шинели. Произведение раскрывает одиночество, бедность и равнодушие общества."
   },
   {
     "title": "Ревизор",
@@ -65,9 +71,10 @@
     "year": "1836",
     "language": "RU",
     "genre": "Русская литература",
+    "pages": 96,
     "access_status": "safe",
     "pdf_path": "books/revizor.pdf",
-    "note": "Классическая сатирическая пьеса."
+    "note": "Классическая сатирическая пьеса о чиновниках, которые принимают случайного человека за важного проверяющего. Произведение высмеивает коррупцию, страх и лицемерие."
   },
   {
     "title": "Муму",
@@ -75,28 +82,31 @@
     "year": "1854",
     "language": "RU",
     "genre": "Короткие произведения",
+    "pages": 45,
     "access_status": "safe",
     "pdf_path": "books/mumu.pdf",
-    "note": "Короткое и эмоциональное произведение русской классики."
+    "note": "Эмоциональный рассказ о крепостном Герасиме и его привязанности к собаке Муму. Произведение показывает жестокость крепостного строя и человеческое бессилие."
   },
   {
     "title": "Белые ночи",
     "author": "Фёдор Достоевский",
     "year": "1848",
     "language": "RU",
-    "genre": "Qısa əsərlər",
+    "genre": "Короткие произведения",
+    "pages": 80,
     "access_status": "safe",
     "pdf_path": "books/belye-nochi.pdf",
-    "note": "Dostoyevskidən qısa və oxunaqlı seçim."
+    "note": "Лирическая повесть о мечтателе, который переживает короткую, но сильную встречу с девушкой Настенькой. Произведение раскрывает одиночество, надежду и хрупкость человеческих чувств."
   },
   {
     "title": "Капитанская дочка",
     "author": "Александр Пушкин",
     "year": "1836",
     "language": "RU",
-    "genre": "Rus ədəbiyyatı",
+    "genre": "Русская литература",
+    "pages": 140,
     "access_status": "safe",
     "pdf_path": "books/kapitanskaya-dochka.pdf",
-    "note": "Məktəb oxusu üçün klassik və rahat əsər."
+    "note": "Историческая повесть о чести, взрослении и событиях пугачёвского восстания. Произведение сочетает личную историю героя с важным историческим фоном."
   }
 ]

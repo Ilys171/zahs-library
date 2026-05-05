@@ -7,3 +7,4 @@ admins.json
 Thumbs.db
 
 public/books/*.pdf
+public/images/*.png
